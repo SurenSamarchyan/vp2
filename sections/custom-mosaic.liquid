@@ -1,0 +1,429 @@
+<section id="mosaic" class="section mosaic-section" data-section-id="{{ section.id }}" data-section-type="mosaic">
+  <div class="custom-mosaic__container container">
+    {%- for block in section.blocks -%}
+      {%- capture block_capture -%}
+        <div class="custom-mosaic__mosaic__item mosaic__item">
+          {%- if block.settings.image and block.settings.video_url == "" -%}
+            <a {% if block.settings.link %}href="{{ block.settings.link }}"{% endif %} id="block-{{ block.id }}" class="promo-block promo-block--{{ block.settings.content_position | replace: '_', '-' }} {% if block.settings.show_overlay %}promo-block--overlay{% endif %}" {{ block.shopify_attributes }}>
+              
+            {%- if block.settings.image -%}
+              {%- capture supported_sizes -%}{%- render 'image-size', sizes: '800,900,1000,1100,1200,1300,1400,1600,1800,2000,2200,2400,2600', image: block.settings.image -%}{%- endcapture -%}
+              {%- assign image_url = block.settings.image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+              <div class="custom-mosaic__aspect-ratio {% if block.settings.mobile_image %}hidden-phone{% endif %}">
+                <img class="slideshow__image lazyload image--fade-in" alt="{{ block.settings.image.alt | escape }}" data-src="{{ image_url }}" data-widths="[{{ supported_sizes }}]" data-sizes="auto">
+
+                <noscript>
+                  <img src="{{ block.settings.image | img_url: '1200x' }}" alt="{{ block.settings.image.alt | escape }}">
+                </noscript>
+              </div>
+
+              {%- if block.settings.mobile_image -%}
+                {%- capture supported_sizes -%}{%- render 'image-size', sizes: '600,700,800,900,1000,1100,1200', image: block.settings.mobile_image -%}{%- endcapture -%}
+                {%- assign image_url = block.settings.mobile_image | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+                <div class="custom-mosaic__aspect-ratio aspect-ratio hidden-tablet-and-up" style="padding-bottom: {{ 100.0 | divided_by: block.settings.mobile_image.aspect_ratio }}%">
+                  <img class="slideshow__image lazyload image--fade-in" alt="{{ block.settings.mobile_image.alt | escape }}" data-src="{{ image_url }}" data-widths="[{{ supported_sizes }}]" data-sizes="auto">
+
+                  <noscript>
+                    <img src="{{ block.settings.mobile_image | img_url: '800x' }}" alt="{{ block.settings.mobile_image.alt | escape }}">
+                  </noscript>
+                </div>
+              {%- endif -%}
+            {%- endif -%}
+
+
+              
+
+              <style>
+                  #block-{{ block.id }} {
+                      background-color: {{ block.settings.background }};
+                      color: {{ block.settings.text_color }}
+                  }
+
+                  #block-{{ block.id }} .button {
+                      background: {{ block.settings.button_background }};
+                      color: {{ block.settings.button_text_color }};
+                  }
+
+                  {%- if block.settings.show_overlay -%}
+                  #block-{{ block.id }}.promo-block--overlay::before {
+                  {%- assign overlay_opacity = block.settings.overlay_opacity | divided_by: 100.0 -%}
+                      background: linear-gradient(to top, rgba(0, 0, 0, 0) 15%, {{ '#000000' | color_modify: 'alpha', overlay_opacity }});
+                  }
+                  {%- endif -%}
+                  .custom-mosaic__container{
+                    margin: 40px auto;
+                  }
+                   .custom-mosaic__mosaic__item.mosaic__item>:first-child {
+                    min-height: 164px;
+                  }
+                  .custom-mosaic__aspect-ratio {
+                    position: initial !important;
+                  }
+                  @media screen and (min-width: 1000px){
+                    .mosaic--two-columns .mosaic__column:first-child {
+                        flex-grow: 1;
+                    }
+                    .custom-mosaic__aspect-ratio .slideshow__image {
+                      height: 330px;
+                    } 
+                  }
+                
+                  @media screen and (max-width: 999px){
+                    .mosaic--two-columns .mosaic__column:first-child .custom-mosaic__mosaic__item>:first-child, .mosaic--three-columns .mosaic__column:nth-child(2) .custom-mosaic__mosaic__item>:first-child {
+                        min-height: 164px;
+                    }
+                  }             
+                  .animation {
+                      animation: fadeIn 3s;
+                  }
+                  .mosaic-section .mosaic__item .animation_wrapper {
+                      animation-duration: 2s;
+                      animation-fill-mode: forwards;
+                      animation-iteration-count: infinite;
+                      animation-name: placeHolderShimmer;
+                      animation-timing-function: linear;
+                      background: #f6f7f8;
+                      background: #CCC;
+                      position: absolute;
+                      overflow: hidden;
+                  }
+                  @keyframes fadeIn {
+                      0% {opacity:0;}
+                      100% {opacity:1;}
+                  }
+                  @keyframes placeHolderShimmer{
+                      from {transition:none;}
+                      to {background-color:#f6f7f8;transition: all 0.3s ease-in-out;}
+                  }
+              </style>
+
+              {%- if block.settings.image -%}
+                <noscript>
+                  <style>
+                      #block-{{ block.id }} .promo-block__image-wrapper {
+                          background-image: url({{ block.settings.image | img_url: '800x' }});
+                      }
+                  </style>
+                </noscript>
+              {%- endif -%}
+            </a>
+          {%- else if block.settings.video_url -%}
+            <div id="block-{{ block.id }}" class="promo-block promo-block--{{ block.settings.content_position | replace: '_', '-' }} {% if block.settings.show_overlay %}promo-block--overlay{% endif %}" {{ block.shopify_attributes }}>
+              <div class="promo-block__image-clip animation_wrapper">
+                <div alt="{{ block.settings.image.alt | upcase }}" class="promo-block__image-wrapper promo-block__image-wrapper--cover lazyload image--fade-in animation" {% if block.settings.image %}data-bgset="{{ bgset }}" data-sizes="auto"{% endif %}>
+                  <div class="placeholder-background">
+                    <video
+                            id="mosaic-video"
+                            src="{{ block.settings.video_url }}"
+                            loop muted playsinline autoplay>
+                    </video>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <style>
+                #block-{{ block.id }} {
+                    background-color: {{ block.settings.background }};
+                    color: {{ block.settings.text_color }}
+                }
+
+                #block-{{ block.id }} .button {
+                    background: {{ block.settings.button_background }};
+                    color: {{ block.settings.button_text_color }};
+                }
+
+                {%- if block.settings.show_overlay -%}
+                #block-{{ block.id }}.promo-block--overlay::before {
+                {%- assign overlay_opacity = block.settings.overlay_opacity | divided_by: 100.0 -%}
+                    background: linear-gradient(to top, rgba(0, 0, 0, 0) 15%, {{ '#000000' | color_modify: 'alpha', overlay_opacity }});
+                }
+                {%- endif -%}
+                .animation {
+                    animation: fadeIn 3s;
+                }
+                #mosaic-video {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+                .mosaic-section .mosaic__item .animation_wrapper {
+                    animation-duration: 2s;
+                    animation-fill-mode: forwards;
+                    animation-iteration-count: infinite;
+                    animation-name: placeHolderShimmer;
+                    animation-timing-function: linear;
+                    background: #f6f7f8;
+                    background: #CCC;
+                    position: absolute;
+                    overflow: hidden;
+                }
+                @keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+                @keyframes placeHolderShimmer{
+                    from {transition:none;}
+                    to {background-color:#f6f7f8;transition: all 0.3s ease-in-out;}
+                }
+            </style>
+          {%- endif -%}
+        </div>
+      {%- endcapture -%}
+
+      {%- if forloop.index == 1 -%}
+        {%- capture block_1 -%}{{ block_capture }}{%- endcapture -%}
+      {%- elsif forloop.index == 2 -%}
+        {%- capture block_2 -%}{{ block_capture }}{%- endcapture -%}
+      {%- elsif forloop.index == 3 -%}
+        {%- capture block_3 -%}{{ block_capture }}{%- endcapture -%}
+      {%- elsif forloop.index == 4 -%}
+        {%- capture block_4 -%}{{ block_capture }}{%- endcapture -%}
+      {%- elsif forloop.index == 5 -%}
+        {%- capture block_5 -%}{{ block_capture }}{%- endcapture -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- comment -%}We have accumulated all the different blocks, so now we simply create the columns based on the number of blocks{%- endcomment -%}
+
+    <div class="mosaic mosaic--{{ section.settings.section_size }} mosaic--{% if section.blocks.size == 1 %}one-column{% elsif section.blocks.size == 2 %}two-columns{% else %}three-columns{% endif %}">
+      {%- case section.blocks.size -%}
+        {%- when 1 or '1' -%}
+          <div class="mosaic__column">
+            {{ block_1 }}
+          </div>
+
+        {%- when 2 -%}
+          <div class="mosaic__column">
+            {{ block_1 }}
+          </div>
+
+          <div class="mosaic__column">
+            {{ block_2 }}
+          </div>
+
+        {%- when 3 -%}
+          <div class="mosaic__column">
+            {{ block_1 }}
+          </div>
+
+          <div class="mosaic__column">
+            {{ block_2 }}
+          </div>
+
+          <div class="mosaic__column">
+            {{ block_3 }}
+          </div>
+
+        {%- when 4 -%}
+          <div class="mosaic__column">
+            {{ block_1 }}
+          </div>
+
+          <div class="mosaic__column">
+            {{ block_2 }}
+          </div>
+
+          <div class="mosaic__column">
+            {{ block_3 }}
+            {{ block_4 }}
+          </div>
+
+        {%- when 5 -%}
+          <div class="mosaic__column">
+            {{ block_1 }}
+            {{ block_2 }}
+          </div>
+
+          <div class="mosaic__column">
+            {{ block_3 }}
+          </div>
+
+          <div class="mosaic__column">
+            {{ block_4 }}
+            {{ block_5 }}
+          </div>
+      {%- endcase -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Custom Mosaic",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "select",
+      "id": "section_size",
+      "label": "Section height",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image",
+          "info": "750 x 1100px .jpg recommended. If none is set, desktop image will be used."
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "800 x 520px .jpg recommended for standard images. 1100 x 1100px .jpg recommended for center images."
+        },
+        {
+          "type": "text",
+          "id": "video_url",
+          "label": "Background video link"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_overlay",
+          "label": "Show overlay",
+          "info": "Increase text readability on busy images.",
+          "default": false
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 50
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text"
+          
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Text"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Content position",
+          "options": [
+            {
+              "value": "top_left",
+              "label": "Top left"
+            },
+            {
+              "value": "top_center",
+              "label": "Top center"
+            },
+            {
+              "value": "top_right",
+              "label": "Top right"
+            },
+            {
+              "value": "middle_left",
+              "label": "Middle left"
+            },
+            {
+              "value": "middle_center",
+              "label": "Middle center"
+            },
+            {
+              "value": "middle_right",
+              "label": "Middle right"
+            },
+            {
+              "value": "bottom_left",
+              "label": "Bottom left"
+            },
+            {
+              "value": "bottom_center",
+              "label": "Bottom center"
+            },
+            {
+              "value": "bottom_right",
+              "label": "Bottom right"
+            }
+          ],
+          "default": "top_left"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "color",
+          "id": "button_background",
+          "label": "Background"
+        
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Text"
+          
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Text",
+          "default": "Learn more"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "category": "Image",
+      "name": "Custom Mosaic",
+      "blocks": [
+        {
+          "type": "item"
+        },
+        {
+          "type": "item"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

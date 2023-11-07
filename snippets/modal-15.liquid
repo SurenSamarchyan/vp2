@@ -1,0 +1,27 @@
+{%- if settings.show_modal == true -%}
+	<div class="modal-wrap modal-discount" id="modal-15-demo"  style="display: none" >
+          <div class="modal-container modal-15-container">
+            {%- form 'customer', id: 'modal15-newsletter', class: 'footer__newsletter-form modal-15-form' -%}
+                {%- if form.posted_successfully? -%}
+                    <p class="alert alert--success alert--center">{{ 'footer.newsletter.success' | t }}</p>
+                  {%- else -%}
+                  {%- if form.errors -%}
+                    <p class="alert alert--error alert--center">{{ form.errors.messages['email'] }}</p>
+                  {%- endif -%}
+  
+                  <input type="hidden" name="contact[tags]" value="newsletter">
+  
+                  <div id="input15" class="form__input-wrapper form__input-wrapper--labelled">
+                    <input type="email" id="footer[{{ section.id }}][contact][email]" name="contact[email]" class="form__field form__field--text" required="">
+                    <label for="footer[{{ section.id }}][contact][email]" class="form__floating-label">{{ 'footer.newsletter.input' | t }}</label>
+                  </div>
+  
+                  <button type="submit" id="modal-15-btn" class="form__submit form__submit--tight button button--primary">{{ 'footer.newsletter.submit' | t }}</button>
+                {%- endif -%}
+             {%- endform -%}
+          <div style="align-self: end">
+            <button class="modal-discount_close_btn">✖</button>
+          </div>
+          </div>
+        </div>
+{%- endif -%}

@@ -1,0 +1,44 @@
+<table>
+  
+  {% comment %}
+  {% for collection in collections %}
+ 		{% for vendor_all_product in collection.products %}
+  			<ul>
+              <li class="vendor"> {{vendor_all_product.title}} </li>	
+  			</ul>	
+  				{% for product in vendor_all_product.title %}
+  					<li>{{product}}</li>
+  				{% endfor %}
+  		{% endfor %}
+  {% endfor %}
+
+  
+  <ul>
+  {% for vendor in collections %}
+  		<li style="font-weight: 900">{{ vendor.title }}</li>
+    		<ul>
+    		{% for vendor_product in  vendor.products %}
+              <li>{{ vendor_product.title }}</li>
+            {% endfor%}  
+    		</ul>	
+  {% endfor %}
+  </ul>
+
+    {% endcomment %}
+  
+<table>
+  
+  
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

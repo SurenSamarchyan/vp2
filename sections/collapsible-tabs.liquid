@@ -1,0 +1,203 @@
+{%- if section.settings.show_tabs -%}
+<h2 style="text-align: center;" class="heading h1">How it works</h2>
+<section data-section-id="{{ section.id }}" data-section-settings='{{ section_settings }}'>
+  <div class="container container--flush">
+    <div class="wrap">    
+      <section class="question-section">
+          <div class="cat-1">
+              <input id="tab-1" type="radio" name="tabs" tabindex="1"> 
+              <label for="tab-1" ><h2 class="heading h1 tab-heading">Step 1</h2></label><!-- end of tab label -->
+
+              <div class="question-wrap">
+                <div>
+                	<h2 class="heading h1 tab-heading tab-content-heading">Open Popup</h2>
+                	<p>Your teWhen a customer is ready to place their order, the AgeChecker.Net popup will appear and explain the verification process and why it is required. Our service works on a variety of devices and platforms making the process smooth on both desktop and mobile, and usually takes under a minute to complete.xt</p>
+                </div>
+                <img src="https://cdn.shopify.com/s/files/1/1118/8312/files/HOW-Screen-1.jpg?v=1635082816" />
+              </div>
+          </div><!-- end of Catagory -->
+
+          <div class="cat-2">
+              <input id="tab-2" type="radio" name="tabs" tabindex="7">
+              <label for="tab-2" ><h2 class="heading h1 tab-heading">Step 2</h2></label>
+
+              <div class="question-wrap">
+                <div>
+                  <h2 class="heading h1 tab-heading tab-content-heading">Enter Information</h2>
+                  <p>Next, the customer is asked for their date of birth and their personal information if we don't already know it. For most websites, we can automatically pull the customer's name and address from your checkout page so they don't have to enter it again. We disable some of the checkout fields on your website to prevent the customer from changing their name or address after being verified with a different identity.</p>
+                </div>
+              	<img src="https://cdn.shopify.com/s/files/1/1118/8312/files/HOW-Screen-2.jpg?v=1635082815" />
+              </div>
+          </div>
+        
+          <div class="cat-3">
+              <input id="tab-3" type="radio" name="tabs" tabindex="16">
+              <label for="tab-3" ><h2 class="heading h1 tab-heading">Step 3</h2></label>
+
+              <div class="question-wrap">
+                <div>
+                  <h2 class="heading h1 tab-heading tab-content-heading">Verify Information</h2>
+                  <p>The information submitted by the customer is processed by our service and checked against millions of documents consisting of public records, credit information, and other sources. For over 90% of the US population, we can automatically approve them with just this information. For international orders, we verify the customer is outside of the US and then allow them to continue. If we determine that the information submitted is fraudulent or it was not found in our databases, we will ask the customer to submit a photo ID.</p>
+                </div>
+              	<img src="https://cdn.shopify.com/s/files/1/1118/8312/files/HOW-Screen-3.jpg?v=1635082816" />
+              </div>
+          </div>
+          <div class="cat-4">
+              <input id="tab-4" type="radio" name="tabs" tabindex="25">
+              <label for="tab-4" ><h2 class="heading h1 tab-heading">Step 4</h2></label>
+
+              <div class="question-wrap">
+                <div>
+                  <h2 class="heading h1 tab-heading tab-content-heading">Upload ID (if required)</h2>
+                  <p>If we request a photo ID, we will give the customer a few options to upload a picture of their ID with their name and date of birth clearly visible. A picture can be taken directly from our popup if the user has a webcam and a supported browser, or they</p>
+                </div>
+              	<img src="https://cdn.shopify.com/s/files/1/1118/8312/files/HOW-Screen-4.jpg?v=1635082815" />
+              </div>
+          </div>
+          <div class="cat-5">
+              <input id="tab-5" type="radio" name="tabs" tabindex="34">
+              <label for="tab-5" ><h2 class="heading h1 tab-heading">Step 5</h2></label>
+
+              <div class="question-wrap">
+                <div>
+                  <h2 class="heading h1 tab-heading tab-content-heading">Complete Purchase</h2>
+                  <p>Once a user is verified, they can complete their purchase with one more click. If they submitted a photo ID, we will remember them so they never have to submit a photo ID again. If the customer was not verified successfully, we give them a chance to fix their picture and try again if it was blurry or unreadable. If we determine that they are underage, we can disable their access to our service. The process is seamless for all users, and takes under a minute from start to finish in most cases. Remember that most customers will never even have to upload an ID.</p>
+                </div>
+              	<img src="https://cdn.shopify.com/s/files/1/1118/8312/files/HOW-Screen-5.jpg?v=1635082816" />
+              </div>
+          </div>
+      </section><!-- End of Questions -->
+  	</div>
+  </div>
+</section>
+
+<style>
+@-webkit-keyframes bugfix {
+  from {
+    padding: 0;
+  }
+  to {
+    padding: 0;
+  }
+}
+@media screen and (max-width: 1400px) {
+  .question-wrap {
+   flex-direction: column; 
+  }
+  .question-wrap p {
+   padding-right: 5%;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .question-wrap p {
+   padding-right: 25%;
+  }
+}
+.question-wrap img {
+  max-width: 720px;
+  width: 100%;
+}
+.wrap {
+  display: block;
+  margin: 0 auto 2em;
+  width: 100%;
+}
+.tab-heading {
+  color: #fff;
+  font-size: 1em;
+}
+.tab-content-heading {
+  color: #616161;
+}
+.question-section {
+  box-shadow: 0 2px 5px rgba(68, 68, 68, 0.4);
+  display: inline-block;
+  font-size: 1rem;
+  margin-bottom: 1em;
+  padding: 1em;
+  position: relative;
+  vertical-align: top;
+  width: 100%;
+}
+@media (min-width: 50em) {
+  .question-section {
+    font-size: 0.75rem;
+    padding: 1em 1.5em;
+  }
+}
+@media (min-width: 62.5em) {
+  .question-section {
+    font-size: 1rem;
+  }
+}
+div[class^="cat"] {
+  width: 100%;
+}
+div[class^="cat"] > label {
+  background: #00807a;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  font-weight: bold;
+  line-height: 1.4;
+  margin-bottom: 0.5em;
+  padding: 0.75em 0.5em;
+  transition: all 0.55s;
+}
+div[class^="cat"] > label:hover {
+  background: #85D8CE;
+}
+@media (min-width: 50em) {
+  div[class^="cat"] > label {
+    font-size: 1.25em;
+  }
+}
+div[class^="cat"] > input {
+  position: absolute;
+  z-index: -999;
+}
+div[class^="cat"] > input:focus + label {
+  background: #4bc5b7;
+  letter-spacing: 1px;
+}
+div[class^="cat"] .question-wrap {
+  height: 100%;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+div[class^="cat"] .question-wrap img {
+ margin: 0 0 10px 0; 
+}
+div[class^="cat"] > input:checked ~ .question-wrap {
+  max-height: 1000px;
+  opacity: 1;
+  transition: all 1.95s cubic-bezier(0.19, 1, 0.22, 1);
+}
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Collapsible tabs",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_tabs",
+      "label": "Show tabs",
+      "default": false
+    }
+  ],
+  "presets": [
+      {
+          "name": "Collapsible tabs",
+          "category": "Custom"
+      }
+	]
+}
+{% endschema %}
+        

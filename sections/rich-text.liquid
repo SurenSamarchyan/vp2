@@ -1,0 +1,159 @@
+{%- case section.settings.text_width -%}
+  {%- when 'narrow' -%}
+    {%- assign container_classes = 'container container--narrow' -%}
+
+  {%- when 'narrow-mini' -%}
+    {%- assign container_classes = 'container container--narrow--mini' -%}
+
+  {%- when 'regular' -%}
+    {%- assign container_classes = 'container container--medium' -%}
+
+  {%- when 'wide' -%}
+    {%- assign container_classes = 'container' -%}
+{%- endcase -%}
+
+{%- case section.settings.title_bold -%}
+	{%- when 'bold' -%}
+    	{%- assign rich_title_weight = 'rich_title_bold' -%}
+
+	{%- when 'light' -%}
+    	{%- assign rich_title_weight = 'rich_title_light' -%}
+{%- endcase -%}
+
+{%- case section.settings.text_align -%}
+	{%- when 'center' -%}
+    	{%- assign rich_text_align = 'rich_text_center' -%}
+
+	{%- when 'right' -%}
+    	{%- assign rich_text_align = 'rich_text_right' -%}
+
+    {%- when 'left' -%}
+            {%- assign rich_text_align = 'rich_text_left' -%}
+{%- endcase -%}
+
+
+<section class="section section--text-centered" data-section-id="{{ section.id }}" data-section-type="rich-text">
+  <div class="{{ container_classes }} {{ rich_text_align }}">
+     {%- assign first_paragraph = false -%}
+    
+    {%- if section.settings.title != blank and page.url != "/pages/lowest-price" -%}
+      <h2 class="heading h1 {{ rich_title_weight }}">{{ section.settings.title | escape }}</h2>
+
+    {% unless first_paragraph %}
+      {% elsif section.settings.title != blank and page.url == "/pages/lowest-price" %}
+        <p class="heading h1 rich_text_paragraph {{ rich_title_weight }}">{{ section.settings.title | escape }}</p>
+      {%- assign first_paragraph = true -%}
+    {% endunless %}
+    
+    {% elsif section.settings.title != blank and page.url == "/pages/lowest-price" %}
+     <h2 class="heading h1 {{ rich_title_weight }}">{{ section.settings.title | escape }}</h2>
+    {%- endif -%}
+
+    <div class="rte">
+      {{ section.settings.content }}
+
+      {%- if section.settings.button_link != blank and section.settings.button_text != blank -%}
+        <a href="{{ section.settings.button_link }}" class="button button--primary" >{{ section.settings.button_text | escape }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    {
+      "type": "select",
+      "id": "text_width",
+      "label": "Text width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        },
+		{
+          "value": "narrow-mini",
+          "label": "Narrow mini"
+        },
+        {
+          "value": "regular",
+          "label": "Regular"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        }
+      ],
+      "default": "narrow"
+    },
+	{
+      "type": "select",
+      "id": "title_bold",
+      "label": "Title weight",
+      "options": [
+        {
+          "value": "bold",
+          "label": "Bold"
+        },
+		{
+          "value": "light",
+          "label": "Light"
+        }
+      ],
+      "default": "light"
+    },
+	{
+      "type": "select",
+      "id": "text_align",
+      "label": "Text align",
+      "options": [
+        {
+          "value": "center",
+          "label": "Center"
+        },
+		{
+          "value": "left",
+          "label": "Left"
+        },
+		{
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Your title"
+    },
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Text",
+      "default": "<p>Use this text to share information about your brand with your customers.<br>Describe a product, share announcements, or welcome customers to your store.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Our products"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Text",
+      "name": "Rich text",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

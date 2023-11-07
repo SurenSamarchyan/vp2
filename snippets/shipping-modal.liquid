@@ -1,0 +1,31 @@
+<div class="shipping-modal-wrap" id="shipping-modal-demo" style="display:none">
+  <div class="shipping-modal-container">
+    
+    <div class="shipping-modal-header">
+      <div style="font-size: 15px;display: flex; justify-content: center; align-items: center;"><img class="lazyload image--fade-in" style="width: 50%" data-src="https://cdn.shopify.com/s/files/1/1118/8312/files/Label_Final_90_1.svg?v=1651485773" alt="OVER 90"></div>
+    </div>
+    <div class="shipping-modal_text_1 modal-title">WAIT A SECOND!</div>
+
+    <div class="shipping-modal_text_2 modal-title">
+      	{% if cart.currency.iso_code == 'USD' %}
+        	<div class="shipping-notice-popup">You're only <span style="color: #BF1872; font-size: 17px">{{ 9900 | minus: cart.total_price | money }}</span> away from <span style="color: #BF1872; font-size: 17px">FREE SHIPPING</span> within the United States!</div>
+        {% endif %}
+      </div>
+
+    
+    
+    <div style="display:flex; justify-content: space-between; background-color: #e9e9e9; padding: 20px;">
+      <div class="shipping-modal-btn-content">
+          <a href="/collections/vape-juice" class="shipping-modal_btn">
+            <span class="shipping-btn_text">Add a product to get free shipping</span>
+          </a>
+          <button type="submit" name="checkout" id="popup-btn-submit" class="shipping-modal_btn">
+            <span class="shipping-btn_text"><span class="otherText">No</span>, I <span class="otherText otherTextSecond">want</span> to pay for shipping</span>
+          </button>
+      </div>
+	</div>
+    
+  </div>
+</div>
+
+

@@ -1,0 +1,136 @@
+  <style>
+    #age-verification-template {
+      display: none;
+    }
+    .section--age-verification .section__content {
+      border: 1px solid #c8c8c8;
+      background: #fff;
+      border-radius: 5px;
+      padding: 0.92857em 0.78571em;
+      font-size: 14px;
+    }
+    .section--age-verification.error .section__content {
+      border: 2px solid #f45b4f;
+    }
+    .section--age-verification .age-error {
+      color: #f45b4f;
+      line-height: 1.3em;
+      margin: 0.57143em 0 0.28571em;
+      display: none;
+    }
+    .section--age-verification.error .age-error {
+      display: block;
+    }
+    .section--age-verification .section__content strong {
+      font-weight: bold;
+    }
+    .section--age-verification .section__content p {
+      margin-bottom: 1.5em;
+    }
+  </style>
+  <div id="age-verification-template">
+    <div class="section section--age-verification" id="age-verification">
+      <div class="section__header">
+        <div class="layout-flex layout-flex--tight-vertical layout-flex--loose-horizontal layout-flex--wrap">
+          <h2 class="section__title layout-flex__item layout-flex__item--stretch" tabindex="-2">
+            Age Verification
+          </h2>
+        </div>
+      </div>
+      <div class="section__content" data-section="customer-information" data-shopify-pay-validate-on-load="false">
+        {{ 'plus.checkout.age_verification_html' | t }}
+        <div class="checkbox-wrapper">
+          <div class="checkbox__input">
+            <input name="checkout[attributes][{{ 'plus.checkout.required_checkbox_1_name' | t }}]" type="hidden" value="0">
+            <input class="input-checkbox" type="checkbox" value="1" name="checkout[attributes][{{ 'plus.checkout.required_checkbox_1_name' | t }}]">
+          </div>
+          <label class="checkbox__label">
+            {{ 'plus.checkout.required_checkbox_1_label_html' | t }}
+          </label>
+        </div>
+        <div class="checkbox-wrapper">
+          <div class="checkbox__input">
+            <input name="checkout[attributes][{{ 'plus.checkout.required_checkbox_2_name' | t }}]" type="hidden" value="0">
+            <input class="input-checkbox" type="checkbox" value="1" name="checkout[attributes][{{ 'plus.checkout.required_checkbox_2_name' | t }}]">
+          </div>
+          <label class="checkbox__label">
+            {{ 'plus.checkout.required_checkbox_2_label_html' | t }}
+          </label>
+        </div>
+        
+		
+      </div>
+      <p class="age-error">{{ 'plus.checkout.required_checkbox_error' | t }}</p>
+    </div>
+  </div>
+  <script>
+    (function($) {
+      function createCookie(name, value, days) {
+        if (days) {
+          var date = new Date();
+          date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+          var expires = "; expires=" + date.toUTCString();
+        } else {
+          var expires = "";
+        }
+        document.cookie = name + "=" + value + expires + "; path=/";
+      }
+
+      function readCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+      }
+
+      if (Shopify.Checkout.step === 'contact_information') {
+        $(document).on('page:load page:change', function() {
+
+          // If we don't already have the age verification, add it
+          if (!$('.step__sections .section--age-verification').length) {
+            $('.step__sections').prepend($('#age-verification-template').html());
+
+            // Apply checkbox IDs
+            $('.step__sections .section--age-verification .input-checkbox').each(function(index) {
+              $(this).attr('id', 'age_verification_' + index);
+            });
+
+            // Attach labels to checkboxes
+            $('.step__sections .section--age-verification .checkbox__label').each(function(index) {
+              $(this).attr('for', 'age_verification_' + index);
+            });
+
+            // Create a cookie when a checkbox value changes
+            $('.step__sections .section--age-verification input[type=checkbox]').change(function() {
+              createCookie(this.id, this.checked, 7);
+            });
+
+            // Restore checked boxes
+            $('.step__sections .section--age-verification input[type=checkbox]').each(function() {
+              // If cookie exists, value will be a string
+              if (readCookie(this.id) === 'true') {
+                $(this).prop('checked', true);
+              }
+            });
+          }
+
+          $('[data-step="contact_information"] form').on('submit', function() {
+            $('.step__sections .section--age-verification').removeClass('error');
+
+            // If they try to proceed without agreeing to age verification, scroll up and display an error
+            if (!$('#age_verification_0').prop('checked') || !$('#age_verification_1').prop('checked') ) {
+              $('html, body').animate({
+                scrollTop: $('#age-verification').offset().top
+              }, 250);
+              $('#age-verification').addClass('error');
+              return false;
+            }
+          });
+        });
+      }
+    })(Checkout.$)
+  </script>

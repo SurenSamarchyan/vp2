@@ -1,0 +1,26 @@
+{%- if settings.show_modal == true -%}
+	<div class="modal-wrap" id="modal-demo" style="display:none">
+          <div class="modal-container">
+            
+            <div class="modal-header">
+              <div class="modal_text_1 modal-title">{{ settings.content_1 }}</div>
+              <div class="modal_text_2 modal-title">{{ settings.content_2 }}</div>
+            </div>
+            
+            <div class="modal-btn-content">
+                <button class="modal_btn btn_agree" id="vjd_age_agree">
+                  <span class="btn_text">{{ settings.button_agree }}</span>
+                  <span class="arrow">➞</span>
+                </button>
+                <a href="{{ settings.age_button_link }}" class="modal_btn btn_disagree">
+                  <span class="btn_text">{{ settings.button_disagree }}</span>
+                  <span class="arrow">➞</span>
+                </a>
+            </div>
+            
+            <div class="modal-footer">
+              {{ settings.footer_text }}
+            </div>
+          </div>
+        </div>
+{%- endif -%}

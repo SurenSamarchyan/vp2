@@ -1,0 +1,195 @@
+<script src="https://kit.fontawesome.com/08ae721119.js" crossorigin="anonymous" defer></script>
+
+<section data-section-id="{{ section.id }}" data-section-type="rewards">
+  <div class="container container--flush">
+    <div class="page__sub-header">
+        <nav aria-label="{{ 'general.breadcrumb.title' | t }}" class="breadcrumb">
+          <ol class="breadcrumb__list" role="list">
+            <li class="breadcrumb__item">
+              <a class="breadcrumb__link link" href="{{ routes.root_url }}">{{ 'general.breadcrumb.home' | t }}</a> {%- render 'icon', icon: 'arrow-right' -%}
+            </li>
+
+            <li class="breadcrumb__item">
+              <a class="breadcrumb__link link" href="{{ routes.account_url }}">{{ 'general.breadcrumb.account' | t }}</a> {%- render 'icon', icon: 'arrow-right' -%}
+            </li>
+
+            <li class="breadcrumb__item">
+              <span class="breadcrumb__link" aria-current="page">{{ 'customer.general.rewards_club' | t }}</span>
+            </li>
+          </ol>
+        </nav>
+      </div>
+  
+    <div style="display: flex;" class="reward__container__flex">
+        <div class="container rewards__container" style="padding-left: 0;width: -webkit-fill-available";>
+          <header class="page__header page__header--stack rewards__header">
+            <h1 class="page__title heading h1">{{ page.title }}</h1>
+
+            {%- if page.content != blank and page.template_suffix == 'contact' or page.template_suffix == 'team' -%}
+              <div class="page__description rte">
+                {{ page.content }}
+              </div>
+            {%- endif -%}
+          </header>
+
+          {%- if page.content != blank and page.template_suffix != 'contact' and page.template_suffix != 'team' -%}
+            <div class="page__content rte">
+              {{ page.content }}
+            </div>
+          {%- endif -%}
+        </div>
+
+         <div class="layout">
+          <div class="layout__section layout__section--secondary">
+            <div class="card card--sticky hidden-pocket">
+              <div class="card__section card__section--tight">
+                <div class="card__linklist">
+                  <a href="{{ routes.account_url }}" class="card__linklist-item link ">{{ 'customer.general.orders' | t }}</a>
+                  <a href="{{ routes.account_addresses_url }}" class="card__linklist-item link">{{ 'customer.general.addresses' | t }}</a>
+                  <a href="/pages/rewards" class="card__linklist-item link text--strong">{{ 'customer.general.rewards_club' | t }}</a>
+                  <a href="{{ routes.account_logout_url }}" class="card__linklist-item link" data-no-instant>{{ 'customer.general.logout' | t }}</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="value-picker-wrapper hidden-tablet-and-up">
+              <button class="value-picker-button value-picker-button--pill" aria-haspopup="true" aria-expanded="false" aria-controls="account-selector" data-action="open-value-picker">
+                {{- 'customer.general.rewards_club' | t -}} {%- render 'icon', icon: 'arrow-bottom' -%}
+              </button>
+
+              <div id="account-selector" class="value-picker" aria-hidden="true">
+                <div class="value-picker__inner">
+                  <header class="value-picker__header">
+                    <span class="value-picker__title text--strong">{{ 'customer.general.my_account' | t }}</span>
+                    <button class="value-picker__close" data-action="close-value-picker" aria-controls="account-selector" aria-label="{{ 'general.accessibility.close' | t }}">{% render 'icon', icon: 'close' %}</button>
+                  </header>
+
+                  <div class="value-picker__choice-list">
+                    <a href="{{ routes.account_url }}" class="value-picker__choice-item">{{ 'customer.general.orders' | t }} {% render 'icon', icon: 'check-2' %}</a>
+                    <a href="{{ routes.account_addresses_url }}" class="value-picker__choice-item">{{ 'customer.general.addresses' | t }} {% render 'icon', icon: 'check-2' %}</a>
+                    <a href="/pages/rewards" class="value-picker__choice-item  is-selected">{{ 'customer.general.rewards_club' | t }} {% render 'icon', icon: 'check-2' %}</a>
+                    <a href="{{ routes.account_logout_url }}" class="value-picker__choice-item" data-no-instant>{{ 'customer.general.logout' | t }} {% render 'icon', icon: 'check-2' %}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "blocks": [
+    {
+      "type": "separator",
+      "name": "Section separator",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Section title"
+        }
+      ]
+    },
+    {
+      "type": "member",
+      "name": "Member",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "400 x 400px .jpg recommended"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Name"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Role"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        },
+        {
+          "type": "text",
+          "id": "link_title",
+          "label": "Link title",
+          "default": "Your link"
+        },
+		{
+          "type": "text",
+          "id": "rte_title",
+          "label": "Heading",
+          "default": "Join our team"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Text",
+          "default": "<p>A short sentence describing your job offer</p>"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "#1e2d7d"
+        },
+        {
+          "type": "color",
+          "id": "text",
+          "label": "Text",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      {
+        "type": "separator",
+        "settings": {
+          "title": "Our team"
+        }
+      },
+      {
+        "type": "member",
+        "settings": {
+          "title": "John D.",
+          "subheading": "CEO",
+          "link": "mailto:john@test.com"
+        }
+      },
+      {
+        "type": "member",
+        "settings": {
+          "title": "Emily H.",
+          "subheading": "CTO",
+          "link": "mailto:emily@test.com"
+        }
+      }
+    ]
+  }
+}
+{% endschema %}

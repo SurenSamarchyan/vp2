@@ -1,0 +1,308 @@
+{% assign counter = 0 %}
+{% for vendor in shop.vendors %}
+{% assign counter = counter | plus: 1 %}
+{% endfor %}
+
+<div class="vjd-container">
+  <div class="container container--narrow">
+    <header class="page__header page__header--centered page__header--stack">
+      <h1 class="page__title heading h1">Shop By Brand</h1>
+    </header>
+  </div>
+  <h2 class="SectionHeader__Heading Heading u-h1 feature_vendor_heading">FEATURED BRANDS</h2>
+  	<hr class="vendor_page_hr">
+    <div id="feature-list">
+  	{% assign my_feature_vendors = "SMOK TECH,MYLE VAPOR,SUORIN,LOST VAPE,Twist E-Liquids,AQUA,POD JUICE,NAKED 100,VGOD,IGNITE,VooPoo,Beard Vape Co" | split: ',' %}
+     	{% for feature_vendor in my_feature_vendors %}
+  		{% assign its_a_match = false %}
+			{% capture my_collection_handle %} {{ feature_vendor | handleize | strip | escape  }} {% endcapture %}
+			{% assign my_collection_handle_stripped = my_collection_handle | strip | escape %}
+			{% for collection in collections %}
+				{% if my_collection_handle_stripped == collection.handle %}
+  					{% if collection.image %}
+  						{% assign collection_image = collection.image %}
+  					{% endif %}
+					{% assign its_a_match = true %}
+				{% endif %}
+			{% endfor %}
+			{% if its_a_match %}
+    			<div class="feature_subcategory-item subcategory-item medium-up--one-sixth col-sm-3 col-md-3 col-lg-2 col-xs-6 col-xl-one-fifth Grid__Cell 1/2--phone 1/4--tablet-and-up 2/12--desk">
+                  <a href="/collections/{{ feature_vendor | handleize }}"> 
+                    <span class="feature_vendors"> 
+                    	<img src="{{ collection_image | img_url: 'medium' }}" alt="{{ my_collection_handle_stripped | escape }}" class="img-responsive" /> 
+                    </span>
+				  </a>
+    			</div>
+			{% endif %}
+	 {% endfor %}
+
+  </div>
+  <h3 class="SectionHeader__Heading Heading u-h3 feature_vendor_heading">ALL BRANDS</h3>
+  <hr class="vendor_page_hr">
+
+  <form id="search_for_vendors" action="#" method="post">
+    
+        <input onkeyup="vendorSearch()" id="vendors_search" type="text" placeholder="Search...">
+          
+            <svg class="Icon Icon--search" enable-background="new 0 0 100 100" id="Layer_1" version="1.1" viewBox="18 18 55 55" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                  <path clip-rule="evenodd" d="M64.5,44.6c0-11.6-9.4-20.9-20.9-20.9c-11.6,0-20.9,9.4-20.9,20.9  c0,11.6,9.4,20.9,20.9,20.9C55.1,65.6,64.5,56.2,64.5,44.6z M80,79.3l-1.8,1.8l-19-19c-4.2,3.7-9.6,6-15.7,6  c-13,0-23.5-10.5-23.5-23.5c0-13,10.5-23.5,23.5-23.5c13,0,23.5,10.5,23.5,23.5c0,6-2.3,11.5-6,15.7L80,79.3z" fill="#231F20" fill-rule="evenodd"></path>
+            </svg>
+  </form>
+  
+  <div id="flav-list">
+
+    
+<script>
+  function vendorSearch() {
+    var input, filter, i, txtValue;
+    input = document.getElementById("vendors_search");
+    filter = input.value.toUpperCase();
+    list = document.getElementById("flav-list");
+    div = list.getElementsByClassName("subcategory-item");
+    div2 = list.getElementsByClassName("Firstletter");
+    for (i = 0; i < div.length; i++) {
+      for (var j = 0; j < div2.length; j++) {
+        h3 = div[i].getElementsByTagName("h3")[0]; 
+        txtValue = h3.textContent || h3.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            div[i].style.display = "";
+            div2[j].style.display = "";
+        } else {
+            div[i].style.display = "none";
+            div2[j].style.display = "none";
+        }
+      }
+    }
+  }
+</script>
+    
+<style>
+  #vendors_search {
+    margin: 15px 0;
+    width: 100%;
+    display: block;
+    height: 40px;
+    border: none;
+    background-color: #f2f5f6;
+    padding: 13px 15px 14px 20px;
+    line-height: 21px;
+    font-weight: 500;
+    font-size: 28px;
+  }
+  #search_for_vendors  {
+   position: relative; 
+  }
+  form#search_for_vendors input[type='text'] {
+    padding: 4px;
+  }
+  form#search_for_vendors svg {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+    font-size: 24px;
+    width: 24px;
+  }
+</style>
+    
+  	{% for product_vendor in shop.vendors %}
+			{% assign its_a_match = false %}
+			{% capture my_collection_handle %} {{ product_vendor | handleize | strip | escape  }} {% endcapture %}
+			{% assign my_collection_handle_stripped = my_collection_handle | strip | escape %}
+
+			{% for collection in collections %}
+				{% if my_collection_handle_stripped == collection.handle %}
+					{% assign its_a_match = true %}
+				{% endif %}
+			{% endfor %}
+    		
+    		{% assign current_letter = product_vendor | slice: 0  | upcase %}
+   			{% assign test_number = current_letter | plus: 0 %}
+			
+    		{% if its_a_match %}
+              {% if test_number == 0%}
+              	{%if letter != current_letter %}
+                  <div class="Firstletter">
+                      {{ product_vendor | slice: 0 }}
+                  </div>
+                  {% assign letter = current_letter %}
+                  {% endif %}
+     				<div class="subcategory-item medium-up--one-sixth col-sm-3 col-md-3 col-lg-2 col-xs-6 col-xl-one-fifth Grid__Cell 1/2--phone 1/4--tablet-and-up 2/12--desk">
+                      <a href="/collections/{{ product_vendor | handleize }}">  
+                        <h3 class="subcategory-item__title">{{ product_vendor }}</h3>
+                      </a>
+                    </div>
+    			{% else %}
+            {% endif %}
+          {% endif %}
+	{% endfor %}
+   {% for product_vendor in shop.vendors %}
+			{% assign its_a_match = false %}
+			{% capture my_collection_handle %} {{ product_vendor | handleize | strip | escape  }} {% endcapture %}
+			{% assign my_collection_handle_stripped = my_collection_handle | strip | escape %}
+
+			{% for collection in collections %}
+				{% if my_collection_handle_stripped == collection.handle %}
+					{% assign its_a_match = true %}
+				{% endif %}
+			{% endfor %}
+    		
+    		{% assign current_letter = product_vendor | slice: 0  | upcase %}
+   			{% assign test_number = current_letter | plus: 0 %}
+			
+    		{% if its_a_match %}
+              {% if test_number != 0%}
+              	{%if letter != current_letter %}
+                  <div class="Firstletter">
+                      {{ product_vendor | slice: 0 }}
+                  </div>
+                  {% assign letter = current_letter %}
+                  {% endif %}
+     				<div class="subcategory-item medium-up--one-sixth col-sm-3 col-md-3 col-lg-2 col-xs-6 col-xl-one-fifth Grid__Cell 1/2--phone 1/4--tablet-and-up 2/12--desk">
+                      <a href="/collections/{{ product_vendor | handleize }}">  
+                        <h3 class="subcategory-item__title">{{ product_vendor }}</h3>
+                      </a>
+                    </div>
+    			{% else %}
+            {% endif %}
+          {% endif %}
+	{% endfor %}
+    
+	</div>
+</div>
+
+<style>
+  .subcategory-item .figure {
+    display: block;
+    max-width: 100%;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.subcategory-item .figure img {
+    width: 100%;
+    padding:10px
+}
+
+.subcategory-item .figure::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 10px solid #eeeeee;
+    content: '';
+    opacity: 1;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+}
+
+.border-dark .subcategory-item .figure::before {
+    border: 10px solid #444444;
+}
+
+.subcategory-item a {
+    text-decoration: none;
+}
+
+.subcategory-item a:hover {
+    text-decoration: none;
+}
+
+.subcategory-item a:hover .figure::before {
+    opacity: 0;
+}
+
+.subcategory-item a:hover .subcategory-item__title {
+    color: #4d9297;
+}
+
+.subcategory-item__title {
+    font-size: 1.25em;
+    line-height: 1em;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #4a4a4a;
+    text-transform: uppercase;
+    -webkit-transition: all 300ms linear 0s;
+    -moz-transition: all 300ms linear 0s;
+    -ms-transition: all 300ms linear 0s;
+    -o-transition: all 300ms linear 0s;
+    transition: all 300ms linear 0s;
+}
+
+.subcategory-item__title a {
+    color: #4a4a4a;
+}
+
+.subcategory-item__title a:hover {
+    color: #4d9297;
+    text-decoration: none;
+}
+
+
+.PageContent.PageContent--narrow.Rte {
+    max-width:none;
+}
+.subcategory-item {
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+    margin-bottom: 5px;
+    margin-right: -4px;
+}
+#flav-list .subcategory-item {
+  margin-right: 30px;
+}
+ 
+.PageContent .subcategory-item a {
+    text-decoration:none;
+}
+  
+  
+  .vjd-container {
+       	padding: 40px 80px;
+  }
+  .vendor-list-item a {
+    	padding: 8px;
+    	border: solid 1px;
+    	min-width: 200px;
+    	display: block;
+  }
+  .vendor-list-item {
+  		margin: 10px;
+  }
+  .vendor-list-item {
+    	display: inline-block;
+  }
+  .vendor-list-item a:hover {
+    	background-color: #C2A284;
+    	color: white;
+  }
+  @media only screen and (max-width: 768px)  {
+  		.vjd-container {
+    		padding: 20px 20px;
+  		}
+  }
+  @media only screen and (min-width: 1140px)  {
+  		.vjd-container {
+    		margin: 20px 203px;
+    		padding: 20px 20px;
+  		}
+  }
+  
+  
+</style>
+
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
+  

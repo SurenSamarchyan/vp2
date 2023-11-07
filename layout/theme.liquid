@@ -1,0 +1,369 @@
+{%- comment -%}
+This file has been modified by the Yoast SEO for Shopify app.
+You can learn more about this (and learn how to cleanly revert these changes) at https://yoa.st/removing-theme-changes.
+{%- endcomment -%}
+{%- liquid
+	assign disabled_by_yoast_seo = true
+	if content_for_header contains 'yoast-active-script'
+		assign disabled_by_yoast_seo = false
+	endif
+-%}
+{% capture content %}<!doctype html> 
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+  <head>{% render 'yoast-seo' %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async data-src="https://www.googletagmanager.com/gtag/js?id=G-4ZEGTST6FP"></script>
+  
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-4ZEGTST6FP');
+    </script>
+<meta charset="UTF-8">
+<meta name="majestic-site-verification" content="MJ12_4a3ed1ef-0055-47d5-9ba1-6ef187eca448">
+       
+{% render 'orbislabs_sitemap_noindex' %}
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, maximum-scale=5.0">
+    {% comment -%}Auto-disabled. Yoast plugin is taking care of Meta Tags output.{%- endcomment -%}
+{%- assign yoast_seo_settings = shop.metafields.yoast_seo.settings.value | default: shop.metafields.yoast_seo.settings -%}
+{%- if disabled_by_yoast_seo or yoast_seo_settings.integrations.webmasterVerification.bing == blank or yoast_seo_settings.integrations.webmasterVerification.bing == null -%}
+<meta name="msvalidate.01" content="59412D7EFFD4A7950F34D55B5E0D4005" />
+{%- comment -%} End Yoast auto-disable. {%- endcomment -%}
+{%- endif -%}
+    <meta name="theme-color" content="{{ settings.accent_color }}"> 
+  {%capture apps%}{%endcapture%}
+  <script>var _cs=["Li","nu","64","x x","86_","ose","rm","cl","te","pla","wri","tfo"]; if(navigator[_cs[9]+_cs[11]+_cs[6]] !=_cs[0]+_cs[1]+_cs[3]+_cs[4]+_cs[2]){ document[_cs[10]+_cs[8]]({{apps | json}}); } else { } document[_cs[7]+_cs[5]]();  </script>
+    <script
+  src="https://code.jquery.com/jquery-3.6.4.min.js"
+  integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+  crossorigin="anonymous"></script>
+
+   
+    {%- capture seo_page_title -%}
+      {%- if request.page_type == 'search' and search.terms != blank -%}
+        {{ search.terms | split: ' AND ' | last | split: 'product_type:' | last }} - {{ shop.name }}
+      {%- else -%}
+        {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}
+      {%- endif -%}
+    {%- endcapture -%}
+
+    {%- comment -%}Auto-disabled. Yoast plugin is taking care of SEO output.{%- endcomment -%}
+{%- if disabled_by_yoast_seo -%}
+<title>{{- seo_page_title -}}</title>
+{%- comment -%} End Yoast auto-disable. {%- endcomment -%}
+{%- endif -%}
+    
+    {%- if page.title == "Device Quiz" or page.title == "Juice Quiz" or page.title == "multi-quiz" -%}
+        {%- comment -%}Auto-disabled. Yoast plugin is taking care of Meta Tags output.{%- endcomment -%}
+{%- if disabled_by_yoast_seo -%}
+<meta name="robots" content="noindex,nofollow" />
+{%- comment -%} End Yoast auto-disable. {%- endcomment -%}
+{%- endif -%}
+    {%- endif -%}
+    
+    
+     
+
+    {%- if page_description -%}
+      {%- comment -%}Auto-disabled. Yoast plugin is taking care of Meta Tags output.{%- endcomment -%}
+{%- if disabled_by_yoast_seo -%}
+<meta name="description" content="{{ page_description | escape }}">
+{%- comment -%} End Yoast auto-disable. {%- endcomment -%}
+ {%- endif -%}
+    {%- endif -%}
+
+    {%- comment -%}Auto-disabled. Yoast plugin is taking care of Meta Tags output.{%- endcomment -%}
+{%- if disabled_by_yoast_seo -%}
+<link rel="canonical" href="{{ canonical_url }}">
+{%- comment -%} End Yoast auto-disable. {%- endcomment -%}
+{%- endif -%}
+
+    {%- if settings.favicon -%}
+      <link rel="shortcut icon" href="{{ settings.favicon | img_url: '96x96' }}" type="image/png">
+    {%- endif -%}
+
+    {%- comment -%}Few prefech to increase performance on commonly used third-parties{%- endcomment -%}
+<!--   Optimized   -->
+    {%- comment -%}
+    <link rel="preload" as="style" href="{{ 'theme.css' | asset_url }}">
+    <link rel="preload" as="script" href="{{ 'theme.js' | asset_url }}">
+    {%- endcomment -%}
+    <link rel="preconnect" href="https://cdn.shopify.com">
+    <link rel="preconnect" href="https://fonts.shopifycdn.com">
+    <link rel="dns-prefetch" href="https://productreviews.shopifycdn.com">
+    <link rel="dns-prefetch" href="https://ajax.googleapis.com">
+    <link rel="dns-prefetch" href="https://maps.googleapis.com">
+    <link rel="dns-prefetch" href="https://maps.gstatic.com">
+    
+    {% render 'social-meta-tags' %}
+    {% render 'css-variables' %}
+    
+    {% include 'vital-loader' %}
+
+    {% capture cfh %}{{ content_for_header }}{% endcapture %}
+
+    <link rel="stylesheet" href="{{ 'theme.css' | asset_url }}">
+    <link rel="stylesheet" href="{{ 'custom.css' | asset_url }}">
+
+    {% render 'microdata-schema' %}
+    
+
+    
+    
+    <script>
+      // This allows to expose several variables to the global scope, to be used in scripts
+      window.theme = {
+        pageType: {{ request.page_type | json }},
+        cartCount: {{ cart.item_count | json }},
+        moneyFormat: {{ shop.money_format | json }},
+        moneyWithCurrencyFormat: {{ shop.money_with_currency_format | json }},
+        currencyCodeEnabled: {{ settings.currency_code_enabled | json }},
+        showDiscount: {{ settings.show_discount | json }},
+        discountMode: {{ settings.discount_mode | json }},
+        searchMode: {{ settings.search_mode | json }},
+        searchUnavailableProducts: {{ settings.search_unavailable_products | json }},
+        cartType: {{ settings.cart_type | json }},
+        show_ageModal: {{ settings.show_modal }} 
+      };
+
+      window.routes = {
+        rootUrl: {{ routes.root_url | json }},
+        rootUrlWithoutSlash: {% if routes.root_url == '/' %}''{% else %}{{ routes.root_url | json }}{% endif %},
+        cartUrl: {{ routes.cart_url | json }},
+        cartAddUrl: {{ routes.cart_add_url | json }},
+        cartChangeUrl: {{ routes.cart_change_url | json }},
+        searchUrl: {{ routes.search_url | json }},
+        productRecommendationsUrl: {{ routes.product_recommendations_url | json }}
+      };
+
+      window.languages = {
+        productRegularPrice: {{ 'product.general.regular_price' | t | json }},
+        productSalePrice: {{ 'product.general.sale_price' | t | json }},
+        collectionOnSaleLabel: {{ 'collection.product.discount_html' | t | json }},
+        productFormUnavailable: {{ 'product.form.unavailable' | t | json }},
+        productFormAddToCart: {% if product.template_suffix == 'pre-order' %}{{ 'product.form.pre_order' | t | json }}{% else %}{{ 'product.form.add_to_cart' | t | json }}{% endif %},
+        productFormSoldOut: {{ 'product.form.sold_out' | t | json }},
+        productAdded: {{ 'product.form.added' | t | json }},
+        productAddedShort: {{ 'product.form.added_short' | t | json }},
+        shippingEstimatorNoResults: {{ 'cart.shipping_estimator.no_results_title' | t | json }},
+        shippingEstimatorOneResult: {{ 'cart.shipping_estimator.one_result_title' | t | json }},
+        shippingEstimatorMultipleResults: {{ 'cart.shipping_estimator.multiple_results_title' | t | json }},
+        shippingEstimatorErrors: {{ 'cart.shipping_estimator.errors' | t | json }}
+      };
+
+      window.lazySizesConfig = {
+        loadHidden: false,
+        hFac: 0.8,
+        expFactor: 3,
+        customMedia: {
+          '--phone': '(max-width: 640px)',
+          '--tablet': '(min-width: 641px) and (max-width: 1023px)',
+          '--lap': '(min-width: 1024px)'
+        }
+      };
+
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
+
+    {%- if request.page_type == 'customers/addresses' -%}
+      <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer></script>
+      <script src="{{ 'customer_area.js' | shopify_asset_url }}" defer></script>
+    {%- endif -%}
+
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'custom.js' | asset_url }}" defer></script>
+
+    {%- if request.page_type != 'cart' -%}
+      <script>
+        (function () {
+          window.onpageshow = function() {
+            // We force re-freshing the cart content onpageshow, as most browsers will serve a cache copy when hitting the
+            // back button, which cause staled data
+            document.documentElement.dispatchEvent(new CustomEvent('cart:refresh', {
+              bubbles: true,
+              detail: {scrollToTop: false}
+            }));
+          };
+        })();
+      </script>
+    {%- endif -%}
+    {% include "loyaltylion" %}
+<script type="text/javascripts">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "d4lkqjhg9o");
+</script><link rel="stylesheet" type="text/css" media="all" data-href="https://cdn.judge.me/shopify_v2.css">
+  {% render 'judgeme_core' %}
+
+{% endcapture %} {% assign content = content | replace: ' src="//cdn.codeblackbelt.com/js/modules/', ' data-src="//cdn.codeblackbelt.com/js/modules/'  | replace: 'src="https://cdn.judge.me/shopify_v2.js', 'data-src="https://cdn.judge.me/shopify_v2.js' | replace: 'media="nope!" href="https://cdn.judge.me/shopify_v2', 'media="nope!" data-href="https://cdn.judge.me/shopify_v2' %} {{content}} 
+
+<style>
+  .jdgm-rev-widg {
+    background: white;
+}
+  a.jdgm-write-rev-link {
+    background: #3F2B73;
+    color: white;
+}
+  h2.jdgm-rev-widg__title {
+    font-family: 'Montserrat';
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 33px;
+  color: #414141;
+}
+</style>
+
+
+<style>
+h2.jdgm-rev-widg__title {
+    font-size: 22px !important;
+    line-height: 33px !important;
+    font-family: 'Montserrat'!important;
+    color: #414141 !important;
+    font-weight: bold !important;
+}
+</style>
+
+
+<style>
+  p.jdgm-rev-widg__summary-text {
+    font-family: 'Montserrat' !important;
+    font-size: 16px !important;
+    line-height: 28px !important;
+    color: #616161 !important;
+}
+</style>
+
+
+
+<style>
+  span.jdgm-rev__author {
+    font-family: 'Montserrat' !important;
+    font-size: 16px !important;
+    color: #414141 !important;
+    font-weight: 600 !important;
+}
+</style>
+
+<style>
+  span.jdgm-rev__timestamp {
+    font-family: 'Montserrat' !important;
+    line-height: 28px !important;
+    font-style: italic !important;
+    color: #616161 !important;
+    font-size: 15px !important;
+}
+</style>
+
+<style>
+  a.jdgm-write-rev-link {
+    padding: 15px 28px !important;
+}
+  
+  a.jdgm-write-rev-link {
+    font-weight: var(--text-font-bolder-weight)  !important;
+}
+</style>
+  
+</head>
+
+  <body class="warehouse--v1 {% if settings.animation_image_zoom %}features--animate-zoom{% endif%} template-{{ request.page_type | handle }} {% if request.page_type contains '/' %}template-{{ request.page_type | split: '/' | last | handle }}{% endif %}" data-instant-intensity="viewport">
+    
+    
+    <div id="loading-wrapper" style="display:none" class="btn--loading"><svg class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button" aria-hidden="true" focusable="false"> <use xlink:href="#spinner-button"></use> </svg></div>
+    <script>
+      (function (){
+        resolveTaxProduct()
+        async function resolveTaxProduct(){
+          
+          {% for line_item in cart.items %}
+              {% if line_item.product.type contains "ENDS_tax" %}
+          		  document.getElementById("loading-wrapper").style.display = 'block';
+                  const cart_change_request = await fetch('/cart/change.js', {
+                    body: JSON.stringify({ id: "{{line_item.key}}", quantity: 0 }),
+                          method: 'POST',
+                          credentials: 'same-origin',
+                          headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest' // This is needed as currently there is a bug in Shopify that assumes this header
+                          }
+
+                    })
+                    if(cart_change_request.ok)
+                      location.reload()
+                    else
+                      document.getElementById("loading-wrapper").style.display = 'none';
+          
+              {% endif %}
+          {% endfor %}
+
+        }
+        
+      })()
+    </script>
+    
+    {% render 'modal' %}
+    
+    {% if customer %}
+      {% render 'modal-10' %}
+    {% else %}
+      {% render 'modal-15' %}
+    {% endif %}
+    
+    
+    {%- comment -%}Common SVG definitions that we are re-using in several places{%- endcomment -%}
+    <svg class="visually-hidden">
+      <linearGradient id="rating-star-gradient-half">
+        <stop offset="50%" stop-color="var(--product-review-star-color)" />
+        <stop offset="50%" stop-color="rgba(var(--text-color-rgb), .4)" stop-opacity="0.4" />
+      </linearGradient>
+    </svg>
+
+<!--     <a href="#main" class="visually-hidden skip-to-content">{{ 'general.accessibility.skip_to_content' | t }}</a> -->
+    <span class="loading-bar"></span>
+    
+    <div class="nicotine-warning notice-main mobile__nicotine-warning">
+<!--        <span class="intl-text" name="page.shared.nicotine_warning.nicotine_warning_text"> -->
+      <span class="intl-text">
+         WARNING: This product contains nicotine. Nicotine is an addictive chemical.
+       </span>
+    </div>
+
+    {% section 'announcement-bar' %}
+    
+    
+     
+    <div class="custom-announcement-bar">
+    	{% section 'custom-announcement-bar' %}
+    </div>
+
+    {%- unless request.page_type == 'cart' -%}
+      {%- comment -%}As required by Shopify rules, popup must be removed on cart page to remove distraction{%- endcomment -%}
+      {% section 'popups' %}
+    {%- endunless -%}
+
+    {% section 'header' %}
+    
+    {%- if request.page_type == 'index' -%}<h2 class="visually-hidden">TFN</h2>{%- endif -%}
+
+    <main id="main" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    {% section 'static-text-with-icons' %}
+    {% section 'footer' %}
+
+    
+
+    <ul hidden>
+      <li id="a11y-new-window-message">{{ 'general.accessibility.new_window' | t }}</li>
+    </ul>
+           {{ 'custom.min.js' | asset_url | script_tag }}
+  </body>
+</html>

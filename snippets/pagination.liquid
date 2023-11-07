@@ -1,0 +1,41 @@
+{%- if paginate.pages > 1 -%}
+  <div class="pagination">
+    <div class="pagination__inner">
+      {% assign pagePrevUrl = paginate.previous.url | split: '?' %}
+      {%- if paginate.previous -%}
+            <a class="pagination__prev link"
+               rel="prev" 
+               title="{{ 'general.pagination.previous_page' | t }}" 
+               data-page="{{ paginate.current_page | minus: 1 }}" 
+               href="{{ pagePrevUrl[0] }}{{ hash }}">
+              {%- render 'icon', icon: 'arrow-left' -%} {{- 'general.pagination.previous_page' | t -}}
+            </a>
+      {%- endif -%}
+
+      <div class="pagination__nav">
+        {%- for part in paginate.parts -%}
+        {% assign mainURL = part.url | split: '?' %}
+          {%- if part.is_link -%}
+        	{%- if part.title != 1 -%}
+            	<a href="{{ mainURL[0] }}{{ hash }}" data-page="{{ part.title }}" class="pagination__nav-item link" title="{{ 'general.pagination.go_to_page' | t: page: part.title }}">{{ part.title }}</a>
+          	{%- else -%}
+        		<a href="{{ mainURL[0] }}" data-page="{{ part.title }}" class="pagination__nav-item link" title="{{ 'general.pagination.go_to_page' | t: page: part.title }}">{{ part.title }}</a>
+          	{%- endif -%}
+          {%- else -%}
+            <a href="{{ mainURL[0] }}" data-page="{{ part.title }}" class="pagination__nav-item link {% if part.title == paginate.current_page %}is-active{% endif %}" title="{{ 'general.pagination.go_to_page' | t: page: part.title }}">{{ part.title }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+
+      <span class="pagination__page-count">{{ 'general.pagination.page_count' | t: current_page: paginate.current_page, pages: paginate.pages }}</span>
+
+      {%- if paginate.next -%}
+        {% assign pageNextUrl = paginate.next.url | split: '?' %}
+        <a class="pagination__next link" rel="next" title="{{ 'general.pagination.next_page' | t }}" data-page="{{ paginate.current_page | plus: 1 }}" href="{{ pageNextUrl[0] }}{{ hash }}">
+          {{- 'general.pagination.next_page' | t -}} {%- render 'icon', icon: 'arrow-right' -%}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}

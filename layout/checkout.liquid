@@ -1,0 +1,949 @@
+{%- comment -%}
+  This file has been modified by the Yoast SEO for Shopify app.
+  You can learn more about this (and learn how to cleanly revert these changes) at https://yoa.st/removing-theme-changes.
+{%- endcomment -%}
+{%- liquid
+  assign disabled_by_yoast_seo = true
+  if content_for_header contains 'yoast-active-script'
+    assign disabled_by_yoast_seo = false
+  endif
+-%}
+<!doctype html>
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0"
+    >
+    <meta name="referrer" content="origin">
+
+    {%- comment -%}Auto-disabled. Yoast plugin is taking care of SEO output.{%- endcomment -%}
+    {%- if disabled_by_yoast_seo -%}
+      <title>{{ page_title }}</title>
+      {%- comment -%} End Yoast auto-disable. {%- endcomment -%}
+    {%- endif -%}
+
+    {{ content_for_header }}
+
+    {{ checkout_stylesheets }}
+    {{ checkout_scripts }}
+    {%- comment -%}{% include 'loyaltylion' %}{%- endcomment -%}
+    <script>
+      lion.configure({ checkout: true })
+    </script>
+  </head>
+  <body>
+    <noscript><meta http-equiv="refresh" content="0;url=https://agechecker.net/noscript"></noscript>
+
+    <style>
+            [data-product-type="ENDS_tax"]{
+            	display:none;
+            }
+            .lds-ring {
+              display: inline-block;
+              position: relative;
+              width: 80px;
+              height: 80px;
+              left: calc(50% - 40px);
+              top: 40%;
+            }
+            .lds-ring div {
+              box-sizing: border-box;
+              display: block;
+              position: absolute;
+              width: 64px;
+              height: 64px;
+              margin: 8px;
+              border: 8px solid #fff;
+              border-radius: 50%;
+              animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+              border-color: #6a6a6a transparent transparent transparent;
+            }
+            .lds-ring div:nth-child(1) {
+              animation-delay: -0.45s;
+            }
+            .lds-ring div:nth-child(2) {
+              animation-delay: -0.3s;
+            }
+            .lds-ring div:nth-child(3) {
+              animation-delay: -0.15s;
+            }
+            @keyframes lds-ring {
+              0% {
+                transform: rotate(0deg);
+              }
+              100% {
+                transform: rotate(360deg);
+              }
+            }
+            #loading-wrapper {
+                display:'none';
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-color: #fafafa;
+                z-index: 1000;
+                top: 0;
+            }
+            [data-order-summary-section="payment-lines"]{
+            	position:relative;
+            }
+            .total-recap__original-price {
+                display: none;
+            }
+
+      /*     upload   */
+      	  .section__upload-file {
+             display: flex;
+             flex-direction: column;
+            }
+            .upload-file__input {
+              width: 0.1px;
+              height: 0.1px;
+              opacity: 0;
+              overflow: hidden;
+              position: absolute;
+              z-index: -1;
+            }
+
+            .upload-file__input ~ label {
+            	display: inline-block;
+              border-radius: 5px;
+              width:  30%;
+              background-color: #00807a;
+              line-height: 42px;
+              font-weight: 700;
+              color: white;
+              transition: background .25s ease-in-out,color .25s ease-in-out,box-shadow .25s ease-in-out;
+            }
+
+            .upload-file__input :focus + label,
+            .upload-file__input + label:hover {
+              cursor: pointer;
+              background-color:#349995;
+            }
+
+            .upload-file__input + label {
+            	margin-top: 5px;
+              margin-right: 5px;
+            }
+
+            .upload-file__item {
+             display: flex;
+             align-items: flex-end;
+             flex: 1;
+             text-align: center;
+            }
+
+            .upload-file__item svg {
+              margin-right: 15px;
+              width: 15px;
+            }
+            .grey {
+              background-color: grey !important;
+              pointer-events: none;
+            }
+            #passportImg, #healthImg {
+              height: 40px;
+              width: 40px;
+            }
+            @media screen and (max-width: 768px) {
+              .upload-file__input ~ label {
+                width:  45%;
+              }
+            }
+
+            /*     Pudo shipping   */
+            .wrapper {
+              border: 1px solid #c8c8c8;
+              background: #fff;
+              border-radius: 5px;
+              font-size: 14px;
+            }
+            .buttonWrapper {
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+            }
+
+            .buttonWrapper .tab-button {
+              border: none;
+              padding: 10px;
+              font-size: 18px;
+              cursor: pointer;
+              transition: 0.5s;
+            }
+
+            .buttonWrapper .tab-button:hover {
+              background-color: #d5e3ff;
+            }
+
+            .buttonWrapper .tab-button.active {
+              background-color: #bccbe9;
+            }
+
+            #tab-pudo {
+             display: none;
+            }
+            #tab-shopify {
+             border-radius: 4px;
+             border: 1px solid #d9d9d9;
+             margin: 0 !important;
+            }
+
+            #pudo-location-list-container {
+              overflow: auto;
+              display: block;
+              max-height: 200px;
+              width: 100%;
+              float: left;
+            }
+            .pudo-location-list {
+              display: block;
+              float: left;
+              width: 100%;
+            }
+            .pudo-location .child-name, .child-selection label {
+              font-size: 16px;
+              color: #086b92;
+              font-weight: bolder;
+            }
+            .pudo-location .child-selection {
+              margin-top: 10px;
+            }
+            input.pudo-location-child5-1 {
+              margin-top: 0px;
+          	margin-right: 10px;
+            }
+            .pudo-location {
+              border: solid 1px #ddd;
+              padding: 10px;
+              margin: 10px 0;
+              font-size: 14px;
+              cursor: pointer;
+            }
+            .searchContainer {
+             float: left !important;
+            }
+            #TFromSearch {
+              border: 1px solid #d9d9d9 !important;
+              border-radius: 4px !important;
+              padding: 10px !important;
+            }
+            .input-group {
+              display: flex;
+              align-items: center;
+            }
+            .input-group-btn {
+              position: relative !important;
+         		z-index: 9 !important;
+            }
+            .child-selection input {
+             	 appearance: auto !important;
+               margin-right: 5px !important;
+          	 vertical-align: middle !important;
+            }
+            .pudo-location.selected {
+                background: #d6d6d6;
+            }
+            @media screen and (max-width: 768px)
+              #searchDealerBtn {
+                 padding: 1.4em !important;
+            }
+            #searchDealerBtn {
+              width: 100%;
+              cursor: pointer;
+              display: inline-block;
+              background-color: #3f2b73;
+              background-clip: border-box;
+              -webkit-box-sizing: border-box;
+              box-sizing: border-box;
+              border: 1px transparent solid;
+              border-radius: 5px;
+              color: white;
+              font-weight: 500;
+              padding: 0.7em 1.7em;
+              text-align: center;
+              position: relative;
+              -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+              transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+              transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+              transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, box-shadow 0.2s ease-in-out, -webkit-box-shadow 0.2s ease-in-out;
+            }
+
+            .step__footer__continue-btn.btn {
+              border-radius:  30px;
+            }
+    </style>
+
+    <script>
+      (function(w,d) {
+        var config = {
+          key: "NLasJYg0BrE1Nz0uw7ThQWi0GLLFv6y6",
+          name: "{{shop.name}}",
+          ignore_fields: true,
+          data: {
+            first_name: "{{checkout.shipping_address.first_name}}",
+            last_name: "{{checkout.shipping_address.last_name}}",
+            address: "{{checkout.shipping_address.address1}}",
+            zip: "{{checkout.shipping_address.zip}}",
+            country: "{{checkout.shipping_address.country_code}}",
+            state: "{{checkout.shipping_address.province_code}}",
+            city: "{{checkout.shipping_address.city}}"
+          },
+          element: "div[data-step=payment_method] form .step__footer button",
+          onstatuschanged: function(verification) {
+            if(verification.status == "accepted") {
+                var input = document.createElement("input");
+                input.setAttribute("type", "text");
+                input.setAttribute("name", "checkout[attributes][AgeChecker-UUID]");
+                input.setAttribute("value", verification.uuid);
+                document.querySelector("form[data-payment-form]").appendChild(input);
+            }
+      	}
+
+        };
+        w.AgeCheckerConfig=config;if(config.path&&(w.location.pathname+w.location.search).indexOf(config.path)) return;
+        var h=d.getElementsByTagName("head")[0];var a=d.createElement("script");a.src="https://cdn.agechecker.net/static/popup/v1/popup.js";a.crossOrigin="anonymous";
+        a.onerror=function(a){w.location.href="https://agechecker.net/loaderror";};h.insertBefore(a,h.firstChild);
+      })(window, document);
+    </script>
+
+    {{ skip_to_content_link }}
+
+    <header class="banner" data-header role="banner">
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </header>
+
+    {{ order_summary_toggle }}
+    <div class="content" data-content>
+      <div class="wrap">
+        <div class="main" role="main">
+          <header class="main__header" role="banner">
+            {{ content_for_logo }}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </header>
+          <main class="main__content" role="main">
+            {{ content_for_layout }}
+          </main>
+          <footer class="main__footer" role="contentinfo">
+            {{ content_for_footer }}
+          </footer>
+        </div>
+        <aside class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    {{ tracking_code }}
+
+    {% render 'plus-age-verification', enable: settings.plus_checkout_age_verification_enable %}
+
+    <script>
+      if (Shopify.Checkout.step == 'shipping_method'){
+        document.querySelector('#main-header').insertAdjacentHTML('afterend', '<p style="margin-top:10px;">Get FREE SHIPPING On Orders Over $99 | NOTE: Please check <a href="/pages/shipping-announcement" style="color:#12988f;">Shipping Announcement</a> Update</p>');
+      }
+    </script>
+
+    {% comment %}
+             <!--     pudo
+          <script>
+      		if (Shopify.Checkout.step == 'contact_information'){
+      			document.querySelector('#section-delivery-title').innerHTML = '<h3 style="margin: 20px 0 10px 0;">DELIVERY OPTIONS</h3>' + '<div class="field__icon" style="right: 0;">' + '<div data-tooltip="true" id="phone_tooltip" class="tooltip-container">' + '<button type="button" class="tooltip-control" data-tooltip-control="true" aria-label="More information" aria-describedby="tooltip-for-phone" aria-controls="tooltip-for-phone" aria-pressed="false" placeholder="Phone">' + '<svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-16 icon-svg--block icon-svg--center" role="presentation" aria-hidden="true" focusable="false">' + '<use xlink:href="#question"></use>' + '</svg>' + '</button><span class="tooltip" role="tooltip" id="tooltip-for-phone" style="font-size:12px;line-height:17px;">We \'re proud to work with PUDOpoint to offer a convenient Pick-up counter at a local business near you! <br><br> We will ship the package to the PUDO location you have selected below. Once the order is delivered, you \'ll receive an email notification that it is ready for pick-up with the address location, Order Number, and business operation hours.<br><br> Pick up the package at your own leisure with adult signature verification and never miss a delivery again!</span>' + '</div>' + '</div>';
+                  document.querySelector('.section--shipping-address .section__content .fieldset').setAttribute('id', 'tab-shopify');
+      //             document.querySelector('.section--shipping-address .section__content').style.display = 'flex';
+
+      			const tabsHTML = `<div class="wrapper" id="tab-pudo">
+                                          <div class="section__content content" id="about">
+      										<div style="display:flex;">
+                                                  <div class="field field--show-floating-label field--half">
+                                                      <div class="field__input-wrapper">
+                                                          <label class="field__label field__label--visible" for="pudo_checkout_shipping_address_first_name">First name</label>
+                                                          <input placeholder="First name" class="field__input" size="30" type="text" value="" id="pudo_checkout_shipping_address_first_name"> </div>
+                                                  </div>
+                                                  <div class="field field--show-floating-label field--half">
+                                                      <div class="field__input-wrapper">
+                                                          <label class="field__label field__label--visible" for="pudo_checkout_shipping_address_last_name">Last name</label>
+                                                          <input placeholder="Last name" class="field__input" size="30" type="text" value="" id="pudo_checkout_shipping_address_last_name"> </div>
+                                                  </div>
+            									</div>
+                                              <div  class="field field--show-floating-label">
+                                                  <div class="field__input-wrapper field__input-wrapper--icon-right">
+                                                      <label class="field__label field__label--visible" for="pudo_checkout_shipping_address_phone">Phone</label>
+                                                      <input placeholder="Phone" data-phone-formatter="true" class="field__input field__input--numeric" size="30" type="tel" value="" id="pudo_checkout_shipping_address_phone" data-phone-formatter-country-code="1">
+                                                      <div class="field__icon">
+                                                          <div data-tooltip="true" id="phone_tooltip" class="tooltip-container">
+                                                              <button type="button" class="tooltip-control" data-tooltip-control="true" aria-label="More information" aria-describedby="tooltip-for-phone" aria-controls="tooltip-for-phone" aria-pressed="false" placeholder="Phone">
+                                                                  <svg class="icon-svg icon-svg--color-adaptive-lighter icon-svg--size-16 icon-svg--block icon-svg--center" role="presentation" aria-hidden="true" focusable="false">
+                                                                      <use xlink:href="#question"></use>
+                                                                  </svg>
+                                                              </button><span class="tooltip" role="tooltip" id="tooltip-for-phone">In case we need to contact you about your order</span>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+
+                                              <div class="grid--full">
+                                                  <div class="grid__item large--three-quarters">
+                                                      <div class="searchContainer field">
+                                                          <div class="input-group">
+                                                              <input type="search" id="TFromSearch" class="form-control" placeholder="Enter your zip/postal code" value="" />
+                                                              <div class="input-group-btn">
+                                                                  <a href="#" id="searchDealerBtn" class="searchlocation" style="background-color:#44a3d3;">Search Dealers</a>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="grid--full">
+                                                  <div class="grid__item">
+                                                      <div class="grid--full" id="LMsg"></div>
+                                                  </div>
+                                              </div>
+      										<div class="grid--full">
+                                                  <div class="grid__item">
+                                                      <div class="pudo-location-list-container" id="pudo-location-list-container">
+      													<ul class="pudo-location-list"></ul>
+                  									</div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>`
+
+              const btnsHTML = `<div class="buttonWrapper">
+                                    <div class="tab-button active" id="tab1" style="border-top-left-radius: 5px;" data-id="home">SHIP TO HOME</div>
+                                    <div class="tab-button" id="tab2" data-id="about">PICK UP LOCALLY</div>
+                                </div>`
+
+              document.querySelector(".section--shipping-address .section__content .fieldset").insertAdjacentHTML("afterbegin", btnsHTML);
+      		document.querySelector(".section--shipping-address .section__content .fieldset").insertAdjacentHTML("afterend", tabsHTML);
+
+              function isValidUSZip(sZip) {
+                 return ((/^\d{4}?$/.test(sZip) && (sZip + '').length === 4) || (/^\d{5}?$/.test(sZip) && (sZip + '').length === 5))
+              }
+
+
+      		async function getData(e){
+      			e.preventDefault();
+                  if(isValidUSZip(document.getElementById('TFromSearch').value)) {
+                  	const response = await fetch('https://partnerapi.pudoinc.com/PUDOService.svc/SearchDealers', {
+                                      	method: 'POST',
+                                      	headers: {
+                                        	'Accept': 'application/json',
+                                        	'Content-Type': 'application/json'
+                                      	},
+                                          body: `{
+                                                "partnerCode":"VapeJuice",
+                                                "partnerPassword":"Vap3ju1ce2022!",
+                                                "address":${document.getElementById('TFromSearch').value},
+      										  "weight":30,
+                                                "weightUnit":"LBS",
+                                                "dimensionUnit":"IN",
+                                                "width":5,
+                                                "height":2,
+                                                "length":7,
+                                                "showBusinessDealers":false,
+                                                "isShopify":false
+                                             }`,
+                                          });
+                       const data = await response.json();
+                       length=data.dealers.length;
+                       console.log(data);
+                       var temp="";
+                       for(let i = 0; i < length; i++) {
+                       	temp+="<li data-action='" + i + "'" + " class='pudo-location'>";
+                          temp+="<div class='child-name'>" + '<span class="dealerName">' + data.dealers[i].dealerName + '</span>' + ", " + '<span class="dealerNo">' + data.dealers[i].dealerNo + '</span>' + "</div>";
+                       	temp+="<div class='child'>" + '<span class="dealerAddress">' + data.dealers[i].dealerAddress1 + '</span>' + ', ' + '<span class="dealerCity">' + data.dealers[i].dealerCity + '</span>' + ', ' + '<span class="dealerProvince">' + data.dealers[i].dealerProvince + '</span>' + ', ' + '<span class="dealerZip">' + data.dealers[i].dealerPostal + '</span>' + ' ' + '<span class="dealerCountry">' + data.dealers[i].dealerCountry + '</span>' + "</div>";
+                          temp+="<div class='child'>" + '(' + data.dealers[i].dealerDistance + ')' + "</div>";
+                          temp+="<div class='child'>" + data.dealers[i].dealerHours + "</div>";
+                       	temp+="<div class='child-selection'><input type='radio' id='pudo_location_selection" + data.dealers[i].dealerNo + "'" + "name='select-pudo-location' value='true' class='radio validation-passed' data-action='" + i + "'" + "><label class='pudo-location-child5-1'  data-action='" + i + "'" + ">Select This Address</label></div>";
+                       }
+                       document.querySelector('.pudo-location-list').innerHTML=temp;
+
+                       document.querySelector('.pudo-location-list').addEventListener('click', (event) => {
+                           Array.from(document.querySelectorAll('.pudo-location')).forEach(el => el?.classList.remove('selected'));
+                           Array.from(document.querySelectorAll('.radio')).forEach(el => el.checked = false);
+                           document.getElementsByClassName('pudo-location')[event.target.getAttribute("data-action")]?.classList.add('selected');
+                           document.getElementsByClassName('radio')[event.target.getAttribute("data-action")].checked = true;
+                       })
+                  } else {
+                   	var temp="";
+                      temp+='<p style="padding: 0 0 7px 8px;color: red">Enter valid ZIP code</p>';
+      				document.querySelector('.pudo-location-list').innerHTML=temp;
+                  }
+              }
+
+
+              const tabs = document.querySelector(".buttonWrapper");
+              const tabButton = document.querySelectorAll(".tab-button");
+              const shopifyTab = document.querySelector("#tab-shopify");
+              const pudoTab = document.querySelector("#tab-pudo");
+
+              document.querySelector('.searchlocation').addEventListener('click',getData);
+
+              tabs.onclick = e => {
+              	const id = e.target.dataset.id;
+                  if (id) {
+                  	tabButton.forEach(btn => {
+                      	btn.classList.remove("active");
+                      });
+                      e.target.classList.add("active");
+
+                      shopifyTab.classList.remove("active");
+                      pudoTab.classList.remove("active");
+
+                      const element = document.getElementById(id);
+                      element?.classList.add("active");
+                  }
+                  if(document.getElementById('tab2').classList.contains('active')) {
+                  	pudoTab.style.display = 'block';
+                    	document.querySelector('#tab-shopify .address-fields').style.display = 'none';
+      				document.querySelector('#tab-shopify .field .checkbox-wrapper').parentElement.style.display = 'none';
+                      document.querySelector('.section--shipping-address .section__content').style.display = 'block';
+                  } else if(document.getElementById('tab1').classList.contains('active')) {
+                  	pudoTab.style.display = 'none';
+                      document.querySelector('#tab-shopify .address-fields').style.display = 'block';
+      				document.querySelector('#tab-shopify .field .checkbox-wrapper').parentElement.style.display = 'block';
+                      document.querySelector('.section--shipping-address .section__content').style.display = 'flex';
+                  }
+
+               }
+
+               document.querySelector('.buttonWrapper').addEventListener('click', () => {
+               	if(document.getElementById('tab2').classList.contains('active')) {
+                  	document.querySelector('#continue_button').addEventListener('click', (event) => {
+                      	event.preventDefault();
+                          if(document.getElementById('pudo_checkout_shipping_address_first_name').value != "" && document.getElementById('pudo_checkout_shipping_address_last_name').value != "" && document.getElementById('pudo_checkout_shipping_address_phone').value != "" && document.querySelectorAll('.pudo-location').length > 0 && [...document.querySelectorAll('.pudo-location')].filter(el => el.classList.contains('selected')).length) {
+
+      						document.getElementById('checkout_shipping_address_first_name').value = document.getElementById('pudo_checkout_shipping_address_first_name').value;
+                              document.getElementById('checkout_shipping_address_last_name').value = document.getElementById('pudo_checkout_shipping_address_last_name').value;
+                              document.getElementById('checkout_shipping_address_company').value = "PUDO" + document.querySelector('.pudo-location.selected .dealerNo').innerText + ' - ' + document.querySelector('.pudo-location.selected .dealerName').innerText;
+                              document.getElementById('checkout_shipping_address_address1').value = document.querySelector('.pudo-location.selected .dealerAddress').innerText;
+                              document.getElementById('checkout_shipping_address_address2').value = document.querySelector('.pudo-location.selected .dealerNo').innerText;
+                              document.getElementById('checkout_shipping_address_city').value = document.querySelector('.pudo-location.selected .dealerCity').innerText;
+
+                              [...document.querySelectorAll('#checkout_shipping_address_country option')].forEach(el => el.selected = false);
+
+                              document.querySelector('#checkout_shipping_address_country option[data-code=US]').selected = true;
+
+      //                      [...document.querySelectorAll('#checkout_shipping_address_province option')].forEach(el => el.selected = false);
+
+                              document.querySelector('#checkout_shipping_address_province').value = document.querySelector('.pudo-location.selected .dealerProvince').innerText;
+                              document.getElementById('checkout_shipping_address_zip').value = document.querySelector('.pudo-location.selected .dealerZip').innerText;
+                              document.getElementById('checkout_shipping_address_phone').value = document.getElementById('pudo_checkout_shipping_address_phone').value;
+                              document.querySelector('.step form').submit();
+                          }
+      				})
+                   } else {
+                     document.querySelector('#continue_button').addEventListener('click', (event) => {
+                      	  document.querySelector('.step form').submit();
+      				})
+                   }
+               })
+
+        }
+      </script>-->
+    {% endcomment %}
+
+    {% comment %}
+          {% if checkout.shipping_address.country_code == "US" %}
+      <!--       <script>
+              (()=>{
+                async function checkZip(zip){
+
+                    const zipCheckerResponse = await fetch(`https://vjdzip.azurewebsites.net/api/zipchecker?code=${zip}`)
+                    const result = await zipCheckerResponse.json()
+
+                    if (result?.data?.status === "not_found") {
+                        document.getElementById("continue_button").disabled = true;
+                        document.getElementById("continue_button").classList.add("btn--disabled")
+                        document.querySelector('.section--shipping-method').innerHTML = "<div class=\"section__content\">\n\n           \n<div role=\"alert\" data-shipping-warning=\"\" data-banner=\"true\" class=\"notice notice--error default-background\" tabindex=\"-1\" aria-atomic=\"true\" aria-live=\"polite\"><svg class=\"icon-svg icon-svg--size-24 notice__icon\" aria-hidden=\"true\" focusable=\"false\"> <use xlink:href=\"#error\"></use> </svg><div class=\"notice__content\"><p class=\"notice__text\">Currently, we don’t have any available shipping option for your address. We’re working hard on providing shipment in this State.</p></div></div>\n\n<div class=\"content-box blank-slate\">\n  <svg focusable=\"false\" aria-hidden=\"true\" class=\"icon-svg icon-svg--size-64 blank-slate__icon\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" viewBox=\"0 0 76.97523 59.755739\"><g transform=\"translate(-0.835631,-8)\" style=\"fill:none;stroke:none\"><g transform=\"translate(1.835631,28.112292)\" style=\"stroke:#b3b3b3;stroke-width:2\"><path d=\"m 0,0 61.789269,0 m -55.9600927,30.622004 15.1558587,0 m -15.1558587,-3.513041 15.1558587,0 m -15.1558587,-3.51304 9.9095997,0\"></path></g><path d=\"m 8.0728499,18.158677 49.3731231,0 6.178927,9.953615 0,36.008666 c 0,1.463767 -1.165835,2.634781 -2.623129,2.634781 l -56.5430104,0 c -1.4572941,0 -2.6231294,-1.171014 -2.6231294,-2.634781 l 0,-36.008666 6.2372187,-9.953615 z m 24.6574161,0 0,9.719412 0,-9.719412 z\" style=\"stroke:#b3b3b3;stroke-width:2\"></path><g transform=\"translate(50.623336,9)\"><g style=\"fill:#ffffff;stroke:#b3b3b3;stroke-width:2\"><ellipse cx=\"13.093762\" cy=\"13.093762\" rx=\"13.093762\" ry=\"13.093762\"></ellipse></g><path d=\"m 13.093763,4.6763438 0,11.3595992\" style=\"stroke:#b3b3b3;stroke-width:2\"></path><ellipse cx=\"13.027511\" cy=\"20.108278\" rx=\"1.4029032\" ry=\"1.4029032\" style=\"fill:#b3b3b3\"></ellipse></g></g></svg>\n  <p>No shipping rates found for this address.</p>\n</div></div>"
+                    }
+                    else if (result?.data?.zip) {
+                        const zip_valid_from = new Date(result?.data?.zip?.valid_from)
+                        if (new Date(2021, 11, 1) < zip_valid_from) {
+                            document.querySelector('.section--shipping-method').insertAdjacentHTML('afterbegin', "<div role=\"alert\" data-shipping-warning=\"\" data-banner=\"true\" class=\"notice notice--error default-background\" tabindex=\"-1\" aria-atomic=\"true\" aria-live=\"polite\"><div class=\"notice__content\"><p class=\"notice__text\">Shipping to your zip code will be available in mid-December. If you are ready to wait, please continue to the payment page.</p></div></div>");
+                            Array.from(document.querySelectorAll('[data-shipping-method] .small-text')).forEach(el=>el.innerText = "Mid to end of December")
+                        }
+                    }
+                }
+                if (Shopify.Checkout.step == 'shipping_method'){
+                  checkZip("{{checkout.shipping_address.zip}}")
+                }
+              })()
+
+            </script> -->
+          {% endif %}
+    {% endcomment %}
+
+    <!-- AU upload files start -->
+    <script>
+      
+	let isAU = false;
+	if (Shopify.Checkout.step == 'shipping_method') {
+		{% if checkout.shipping_address.country_code == "AU" %}
+       		isAU = true;
+      	{% endif %}
+    }
+  
+   	if (isAU) {
+		const btn = document.getElementById('continue_button');
+		const htmlText = `<p style="margin-top: 10px;">Please upload your ID and Prescription.</br><a href="https://www.tga.gov.au/nicotine-vaping-products">Click here</a> for detailed information <a href="https://www.tga.gov.au/nicotine-vaping-products">tga.gov.au</a></p>
+							<div class="section__upload-file">
+								<div class="upload-file__item">
+                                	<input id="passport" type="file" accept="image/*" class="filesToUpload upload-file__input" onchange="loadPassportFile(event)"/>
+                                	<label for="passport">{%- render 'icon', icon: 'upload-image' -%}Upload ID *</label>
+                                	<img id="passportImg" src="#" alt="your image" />
+                                </div>
+
+                               	<div class="upload-file__item">
+                                	<input id="health" type="file" accept="image/*" class="filesToUpload upload-file__input" onchange="loadHealthFile(event)"/>
+                                	<label for="health">{%- render 'icon', icon: 'upload-image' -%}Upload Prescription</label>
+                                	<img id="healthImg" src="#" alt="your image" />
+                                </div>
+                             </div>
+                             <div id="status"></div>`
+              
+      var loadPassportFile = function(event) {
+          let output = document.getElementById('passportImg');
+          output.src = URL.createObjectURL(event.target.files[0]);
+          output.onload = function() {
+              URL.revokeObjectURL(output.src) // free memory
+          }
+          output.style.display= 'block';
+      };
+
+      var loadHealthFile = function(event) {
+          let output = document.getElementById('healthImg');
+          output.src = URL.createObjectURL(event.target.files[0]);
+          output.onload = function() {
+              URL.revokeObjectURL(output.src) // free memory
+          }
+          output.style.display= 'block';
+      };	
+                
+      document.getElementById('continue_button').setAttribute("disabled", "disabled");
+      document.getElementById('continue_button').classList.add('grey');
+      
+      document.querySelector(".section--shipping-method").insertAdjacentHTML("beforebegin", htmlText );
+
+      const passport = document.querySelector('#passport');
+      const health = document.querySelector('#health');
+      document.getElementById('passportImg').style.display = 'none';
+      document.getElementById('healthImg').style.display = 'none';
+
+      async function uploadFile(e){
+          document.getElementById('continue_button').classList.add("btn--loading");
+          document.getElementById('continue_button').setAttribute("aria-busy", "true");
+          e.preventDefault();
+          let data1 = new FormData()
+          let data2 = new FormData()
+          if (passport.files[0]) {
+              const idFileType = passport.files[0].type.split("/").pop();
+              data1.append('file',passport.files[0]);    
+              try{
+                  const resp = await fetch(`https://au-upload-blob-function.azurewebsites.net/api/HttpTrigger1?code=fHZnR8foX03eu2OFFM78iIFW9A5AOEFp4qBVKWNutW-EAzFuLOEKlA==&filename="{{ checkout.customer.name }}"_ID.${idFileType}&username=jsmith`, { method: 'POST', body:data1 });
+              }catch(e){
+                  console.log(e);
+              }
+          }
+
+          if (health.files[0]) {
+              const preFileType = health.files[0].type.split("/").pop();
+              data2.append('file',health.files[0]);    
+              try{
+                  const resp = await fetch(`https://au-upload-blob-function.azurewebsites.net/api/HttpTrigger1?code=fHZnR8foX03eu2OFFM78iIFW9A5AOEFp4qBVKWNutW-EAzFuLOEKlA==&filename="{{ checkout.customer.name }}"_PRE.${preFileType}&username=jsmith`, { method: 'POST', body:data2 });
+              }catch(e){
+                  console.log(e);
+              }
+          }
+          document.querySelector('.edit_checkout').submit();
+      }
+
+      document.addEventListener('page:change', () => {
+      	document.getElementById('continue_button').setAttribute("disabled", "disabled");
+      	document.getElementById('continue_button').classList.add('grey');
+      });
+
+      document.querySelector('#passport').addEventListener('change', () => {
+          if(document.querySelector('#passport').files.length) {
+              document.getElementById("passportImg").style.display="block";
+              document.getElementById('continue_button').removeAttribute("disabled");
+              document.getElementById('continue_button').classList.remove('grey');
+              document.getElementById('continue_button').addEventListener('click',uploadFile);
+          } else {
+              document.getElementById('continue_button').setAttribute("disabled", "disabled");
+              document.getElementById('continue_button').classList.add('grey');
+              document.getElementById("passportImg").style.display="none";
+          }
+      })
+	}
+
+          
+
+    </script>
+
+    <!-- AU upload files end -->
+
+    <script>
+      
+ 	
+      const pcodevp = "{{checkout.shipping_address.province_code}}"
+      let isRegion = false;
+      let isDelta8 = false;
+      let isUS = false;
+	{% if (checkout.shipping_address && (checkout.shipping_address.country_code == "US")) %}
+ 		isUS = true;
+	{% endif %}
+    
+    const region = "{{checkout.shipping_address.province_code}}"
+    {% if (checkout.shipping_address and (checkout.shipping_address.province_code == "NY"  or checkout.shipping_address.province_code == "MA" or checkout.shipping_address.province_code == "NJ" or checkout.shipping_address.province_code == "RI")) %}
+ 		isRegion = true;
+	{% endif %}
+
+    {% if (checkout.shipping_address and (checkout.shipping_address.province_code == "AK"  or checkout.shipping_address.province_code == "AZ" or checkout.shipping_address.province_code == "AR" or checkout.shipping_address.province_code == "CA" or checkout.shipping_address.province_code == "CO" or checkout.shipping_address.province_code == "CT" or checkout.shipping_address.province_code == "DE"  or checkout.shipping_address.province_code == "ID" or checkout.shipping_address.province_code == "IA" or checkout.shipping_address.province_code == "KY" or checkout.shipping_address.province_code == "MI" or checkout.shipping_address.province_code == "MS" or checkout.shipping_address.province_code == "MT" or checkout.shipping_address.province_code == "NY" or checkout.shipping_address.province_code == "ND" or checkout.shipping_address.province_code == "RI" or checkout.shipping_address.province_code == "UT" or checkout.shipping_address.province_code == "VT" or checkout.shipping_address.province_code == "WA" )) %}
+ 		isDelta8 = true;
+	{% endif %}
+
+      if(isRegion){
+            const bannedProductIds = [
+          {% for line_item in checkout.line_items %}
+              {% if line_item.product.tags contains "Flavor-Ban-Regions" %}
+                    "{{line_item.product.id}}",
+              {% endif %}
+          {% endfor %}
+        ];
+        bannedProductIds.forEach(id =>{
+          const element = document.querySelectorAll("[data-product-id*='"+ id +"']");
+          element[0] && element[0].classList.add('banned-item');
+          element[0] && element[0].classList.add('banned-item-region');
+        })
+		const descriptionWrappers = document.querySelectorAll(".banned-item.banned-item-region .product__description .product__description__name")
+
+		descriptionWrappers.forEach(item=>{
+          item.innerHTML = item.innerHTML + "<div style='color:red'>This item is banned in {{checkout.shipping_address.province}}</div>";
+		})
+        const notice_element = document.querySelector('.section--shipping-method .section__content .notice--error .notice__content .notice__text')
+        if(notice_element)
+          notice_element.innerHTML = "One or more items are currently unavailable to ship to the address you have provided. Please remove the item(s) to proceed with shipping."
+      
+      }
+      
+      if(isDelta8){
+            const bannedProductIds = [
+          {% for line_item in checkout.line_items %}
+              {% if line_item.product.tags contains "Delta8-Ban-Regions" %}
+                    "{{line_item.product.id}}",
+              {% endif %}
+          {% endfor %}
+        ];
+        bannedProductIds.forEach(id =>{
+          const element = document.querySelectorAll("[data-product-id*='"+ id +"']");
+          element[0] && element[0].classList.add('banned-item');
+          element[0] && element[0].classList.add('banned-item-region');
+        })
+		const descriptionWrappers = document.querySelectorAll(".banned-item.banned-item-region .product__description .product__description__name")
+
+		descriptionWrappers.forEach(item=>{
+          item.style.color = 'red';
+		})
+        const notice_element = document.querySelector('.section--shipping-method .section__content .notice--error .notice__content .notice__text')
+        if(notice_element)
+          notice_element.innerHTML = "One or more items are currently unavailable to ship to the address you have provided. Please remove the item(s) to proceed with shipping."
+      
+      }
+ 
+      if(isUS){
+            const bannedProductIds = [
+          {% for line_item in checkout.line_items %}
+              {% if line_item.product.tags contains "Flavor-Ban" %}
+                    "{{line_item.product.id}}",
+              {% endif %}
+          {% endfor %}
+        ];
+        bannedProductIds.forEach(id =>{
+          const element = document.querySelectorAll("[data-product-id*='"+ id +"']");
+          element[0] && element[0].classList.add('banned-item');
+          element[0] && element[0].classList.add('banned-item-us');
+        })
+		const descriptionWrappers = document.querySelectorAll(".banned-item.banned-item-us .product__description")
+
+		descriptionWrappers.forEach(item=>{
+          item.innerHTML = item.innerHTML + "<div style='color:red'>This item is banned in US</div>";
+		})
+      
+      }
+
+      let has_po_box = false;	
+      	
+      {% if (checkout.shipping_address and checkout.shipping_address.address1) %}	
+      	{% assign address1 = checkout.shipping_address.address1 | remove:" " | downcase  %}	
+        	{% if (address1 contains "pobox" or address1 contains "p.o.box") %}	
+				has_po_box = true;	
+      		{% endif %}	
+	  {% endif %}	
+      {% if (checkout.shipping_address and checkout.shipping_address.address2) %}	
+      	{% assign address2 = checkout.shipping_address.address2 | remove:" " | downcase  %}	
+        	{% if (address2 contains "pobox" or address2 contains "p.o.box") %}	
+				has_po_box = true;	
+      		{% endif %}	
+	  {% endif %}	
+      if(has_po_box){	
+      	let notice_text_select = document.getElementsByClassName("blank-slate")	
+		let notice_text = notice_text_select[0]	
+         if(notice_text)	
+           notice_text.textContent = "Note: We’ve detected that you’re attempting to ship to a PO Box. Unfortunately, we are no longer allowed to ship to PO Boxes as all packages are required to have an Adult Signature prior to being handed over due to the enforcement of the PACT Act. Please provide an alternative address prior to placing your order."	
+      }	
+
+      
+      
+      (function ExciseTaxResolver() {
+        
+        document.addEventListener('page:load', ()=>{
+            const province_element = document.getElementById("checkout_shipping_address_province")
+        	province_element && province_element.addEventListener('change', AddTaxAndUpdatePricing)
+            
+            const country_element = document.getElementById("checkout_shipping_address_country")
+        	country_element && country_element.addEventListener('change', AddTaxAndUpdatePricing)
+        });
+
+        AddTaxAndUpdatePricing()
+        
+	  	async function AddTaxAndUpdatePricing(){
+          	console.log("adding taxes...")
+          	setLoading(true)
+        	const cart_old = await (await fetch("/cart.js")).json()
+      		await resolveTaxProduct(cart_old)
+            const updated_cart = await (await fetch("/cart.js")).json()
+            const total_price_elements = Checkout.$("[data-checkout-payment-due-target]")
+            const total_old = total_price_elements.attr("data-checkout-payment-due-target")
+            const total_price_new = total_old - cart_old.total_price + updated_cart.total_price;
+          	total_price_elements.attr("data-checkout-payment-due-target", total_price_new)
+            total_price_elements.text(`$${total_price_new/100}`)
+            await updateExciseTaxInSummary(updated_cart)
+            setLoading(false)
+            console.log("taxes updated!!")
+        }
+
+        
+      async function resolveTaxProduct(cart) {
+        const province_element = document.getElementById("checkout_shipping_address_province")
+        const provice_short_code = (province_element && province_element.value) || "{{checkout.shipping_address.province_code}}"
+
+        const country_element = document.getElementById("checkout_shipping_address_country")
+        const selected_country_option = country_element && country_element.options[country_element.selectedIndex]
+        const country = (selected_country_option && selected_country_option.getAttribute("data-code")) || "{{checkout.shipping_address.country_code}}"
+        
+        if(!provice_short_code || !country)
+          return
+         
+        const tax_item = cart.items.find(item => item.product_type == "ENDS_tax")
+
+        if (Shopify.Checkout.step === 'payment_method' || Shopify.Checkout.step === 'contact_information' || Shopify.Checkout.step === 'shipping_method') {
+          const tax_added = await addTaxes(provice_short_code, country)
+          const cart_with_taxes = await (await fetch("/cart.js")).json()
+        }
+      }
+      
+      //TODO better approach
+      function setLoading(loading) {
+        if(!document.getElementById("loading-wrapper"))
+          	appendLoadingHTML()
+        
+        document.getElementById("loading-wrapper").style.display = loading ? 'block' : 'none';
+      }
+      
+      function appendLoadingHTML(){
+      	Checkout.$("[data-order-summary-section='payment-lines']").append(`<div id="loading-wrapper" class="btn--loading"><svg class="icon-svg icon-svg--size-18 btn__spinner icon-svg--spinner-button" aria-hidden="true" focusable="false"> <use xlink:href="#spinner-button"></use> </svg></div>`)
+      }
+      
+      async function addTaxes(province_code, country) {
+        try {
+          const res = await fetch(`https://vapetaxer-production.herokuapp.com/api/taxV2/addtaxes/siroart.myshopify.com/${Shopify.Checkout.token}/${province_code}/${country}`, { mode: 'cors' })
+
+          if (res.status == 200)
+            return true
+        } catch (e) {
+          console.log(e)
+        }
+      }
+      
+      document.addEventListener('page:load', updateExciseTaxInSummaryWithLoading);
+
+      document.addEventListener('page:change', updateExciseTaxInSummaryWithLoading);
+      
+//       document.addEventListener('page:change', updateShippingMethodText);
+      
+//       async function updateShippingMethodText() {
+//         if (Shopify.Checkout.step == 'shipping_method'){
+//           document.querySelector('#main-header').insertAdjacentHTML('afterend', '<p style="margin-top:10px;">Get FREE SHIPPING On Orders Over $75 | NOTE: Please check <a href="/pages/shipping-update" style="color:#12988f;">Shipping Announcement</a> Update</p>');
+//         	console.log(99999)
+//         }
+//       }
+		
+      if(Shopify.Checkout.step !==  'contact_information'){
+        Checkout.$("form.edit_checkout").on("change", updateExciseTaxInSummaryWithLoading);
+      }
+      
+      async function updateExciseTaxInSummaryWithLoading() {
+        setLoading(true)
+        await updateExciseTaxInSummary()
+        setLoading(false)
+      }
+      
+      async function updateExciseTaxInSummary(_cart) {
+        const cart = _cart || (await (await fetch("/cart.js")).json())
+        const tax_item = cart.items.find(item => item.product_type == "ENDS_tax")
+        
+        const excise_tax = tax_item && tax_item.final_line_price; //0 {% for line_item in checkout.line_items %}{% if line_item.product.type == "ENDS_tax" %} + {{line_item.final_price}}{% endif %}{% endfor %}
+        Checkout.$("#excise_tax_total").remove()
+        const state_select_element = document.getElementById("checkout_shipping_address_province")
+        const state_option = state_select_element && state_select_element.options && state_select_element.options[state_select_element.selectedIndex]
+        const state = (state_option && state_option.innerHTML) || "{{checkout.shipping_address.province}}" ;
+        if (excise_tax > 0) {
+          const subtotal = cart.total_price - excise_tax;
+          Checkout.$(".total-line--subtotal .total-line__price span").text(`$${subtotal / 100}`)
+          Checkout.$(".total-line-table tbody").append(`<tr id="excise_tax_total" class="total-line total-line--taxes" data-checkout-taxes=""> 
+                                                           <th class="total-line__name" scope="row">
+															Excise Tax (${state} Vapor Tax)
+                                                      </th>  
+                                                      <td class="total-line__price">    
+                                                      <span class="order-summary__emphasis skeleton-while-loading" data-checkout-total-taxes-target="${excise_tax}">
+                                                      $${excise_tax / 100}</span>
+                                                      </td></tr>`)
+        }
+        
+      }
+
+
+
+    })();
+
+
+    </script>
+    <script>
+      
+      const order_tracking = "{{order.attributes.Custom_tracking_number}}"
+      if(Shopify.Checkout.isOrderStatusPage && order_tracking){
+        if (document.querySelector('.shipment-information__title.emphasis').textContent.includes("Tax product")) { 
+         	 document.querySelector('.shipment-information__title.emphasis').closest(".shipment-information").style="display: none";
+        }
+        //{{order.name}}
+		Array.from(document.querySelectorAll(".tracking-info__number strong")).forEach(e=>e.textContent = "Tracking number")
+        Array.from(document.querySelectorAll(".tracking-info__number a")).forEach(e=>{e.href = `https://allinonetrack.com/track/${order_tracking}`;e.textContent = order_tracking;})
+      }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,321 @@
+{% assign counter = 0 %}
+{% for vendor in shop.vendors %}
+{% assign counter = counter | plus: 1 %}
+{% endfor %}
+
+ <div class="vjd-container">
+  <!-- search  
+	<input id="myInput" type="text" placeholder="Search..">
+    <div id="flav-list">
+    <script>
+          $(document).ready(function(){
+          $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#myTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+       });
+      });
+    </script>   -->
+   
+   
+   {% comment %} 
+   
+   <table>
+      {% paginate collections.all.all_products by collections.all.all_products_count %}
+         <li>{{ collections.all.all_products_count }}</li>
+      	 {% assign collectionsHandle = "taylor-flavors,verdict-vapors,tailored-vapors,ripe-vapes,ruthless," | split: ',' %}
+          {% for collection in collectionsHandle%}
+      		{% for product in collections[collection].all_products%}
+     		<tr> 
+              <td>{{ product.url | prepend: "https://vapejuicedepot.com" }}<td>
+            </tr>
+          {% endfor %}
+      {% endfor %}
+      {% endpaginate %}
+  	</table>
+   
+   {% endcomment %} 
+
+
+ {% comment %} 
+   
+
+   <table>
+      {% paginate collections.all.all_products by collections.all.all_products_count %}
+         <li>{{ collections.all.all_products_count }}</li>
+      	 {% assign collectionsHandle = "13th-floor-elevapors,13th-floor-elevapors-nicotine-salt,30ml-eliquids,7-daze,9pm-dessert-vapor-e-liquid-by-sqn,air-factory-ejuice,alcohol-vape-juice-flavors,ald-amaze,all-products,all-products,almond-vape-juice-flavors,alpha-vape,alt-zero,alternativ-e-liquids,alur-vapor,apple-pie-vape-juice-flavors,apple-vape-juice-flavors,aqua,aqua-nicotine-salts,aspire-vape,asvape,bad-drip-labs,bakery-vape-juice-flavors,bam-bam's-cannoli-e-liquids,banana-vape-juice-flavors,bazooka-e-liquid-flavors,bazooka-sour-straws-collection,bazooka-sour-straws-ice-collection,beard-vape-co,berry-vape-juice-flavors,best-selling-e-liquids,best-selling-regular-e-liquids,beverage-vape-juice-flavors,black-currant,blackberry-vape-juice-flavors,blood-orange-vape-juice-flavors,blue-raspberry-vape-juice-flavors,blueberry-vape-juice-flavors,blvk-unicorn,bo-vaping,bomb-bombz-e-liquids,bora-e-liquid,boulder-vape,brands,brella-salts,brewell-mfg,brik,bubblegum-vape-juice-flavors,bun-shoppe-e-liquid-flavors,bundle-deals,burst-eliquid,butterscotch-vape-juice-flavors,cactus-vape-juice-flavors,cake-vape-juice-flavors,cali-cooler,cali-custard,candy-apple-vape-juice-flavors,candy-king-e-liquid-flavors,candy-vape-juice-flavors,cantaloupe-vape-juice-flavors,caramel-vape-juice-flavors,ccell,cereal-vape-juice-flavors,champagne-vape-juice-flavors,charlie's-chalk-dust-e-liquids,cheesecake-vape-juice-flavors,cherry-vape-juice-flavors,chewy-candy-vape-juice-flavors,chocolate-vape-juice-flavors,churro-vape-juice-flavors,cigar-vape-juice-flavors,cinnamon-vape-juice-flavors,citrus-vape-juice-flavors,city-of-vape-eliquid,closed-pods,closed-system-pod-kits,cloud-nurdz,coastal-clouds,cocktail-vape-juice-flavors,coconut-vape-juice-flavors,coffee-vape-juice-flavors,collection-for-regions-with-a-flavor-ban,cookie-vape-juice-flavors,cool-mint-vape-juice-flavors,cosmic-fog-e-liquid-flavors,cranberry-vape-juice-flavors,cream-cheese-vape-juice-flavors,cream-vape-juice-flavors,crème-de-la-crème,crisp-e-liquid,cucumber-vape-juice-flavors,custard-vape-juice-flavors,custom-30ml-elquid,cuttwood-e-liquid-flavors,deal20,delta-8-thc,dessert-vape-juice-flavors,digiflavor,dinner-lady,disposable-e-cigarettes,donut,dotmod,dr-shugar-chitz,dragon-fruit-vape-juice-flavors,drip-n-vape,drip-tribe-e-liquid,dry-herb-vaporizers,efest,electric-sky-co,essence-vapor,excise-tax,eye-candy-e-liquid,ezzy-disposable-pods,famous-fair-e-liquid,featured-devices,featured-products,flash-sale,fogg-vape,four-seasons-e-liquid,freebase-e-liquids,freemax,fresca-e-liquid,fresh-farms-e-liquid,fresh-pressed-e-liquids,frisco-vapor,fruit-punch-vape-juice-flavors,fruits-vape-juice-flavors,fruity-pebbles-vape-juice-flavors,fryd-eliquids,geekvape,glas-vapor,gogo-salts,gorilla-flavor,göst-vapor,got-e-liquid,graham-cracker-vape-juice-flavors,granola-vape-juice-flavors,grape-vape-juice-flavors,grapefruit-vape-juice-flavors,greek-yogurt-vape-juice-flavors,green-apple-vape-juice-flavors,green-smart-living,grey-joose,guava-vape-juice-flavors,hale-puff,hangsen,hard-candy-vape-juice-flavors,hazelnut-vape-juice-flavors,helix-bar,hemlock-vapor-co,hi-drip-e-liquids,honey-vape-juice-flavors,honeydew-vape-juice-flavors,horizontech,huff-pods,humble-juice-co.,hyppe-bar,ice-cream-vape-juice-flavors,ice-vape-juice-flavors,ignite,imren-batteries,innevape-e-liquids,innokin,ionic-nicotine-salt-e-liquids,ipha,iqs,iquit-salt-nicotine,jack-pod,jam-monster,jelly-vape-juice-flavors,jomotech,joyetech-vaping-hardware,juice-head,juicy-af,just-juice-co,justfog,kangertech,kdest,keep-it-100-e-juice,key-lime-vape-juice-flavors,khali-vapors,killa-fruits,kilo-e-liquids,kiwi-vape-juice-flavors,komge,laan-by-shanlaan,last-drop,latte-vape-juice-flavors,lemon-vape-juice-flavors,lemonade-vape-juice-flavors,licorice-vape-juice-flavors,lime-vape-juice-flavors,limited-time-offer,limitless-mod-co.,liquid-efx-frenzy,loaded-e-liquid,lost-vape,lychee-vape-juice-flavors,madewell-vape-co,mango-vape-juice-flavors,mangosteen-vape-juice-flavors,maple-vape-juice-flavors,marina-vape,marshmallow-vape-juice-flavors,melon-vape-juice-flavors,menthol-vape-juice-flavors,meringue-e-liquids,met4-vapor,mighty-vapors,milk-vape-juice-flavors,milkshake-vape-juice-flavors,mint-vape-juice-flavors,minute-man-vape,moonwlkr,mr-fog,mr-salt-e,muffin-vape-juice-flavors,my-bar-disposable-pods,myle-vapor-pod-system,naee-technology,naked-100-candy,naked-100-cream,naked-100-e-liquid,naked-100-juice,naked-100-menthol,naked-100-salt,naked-100-tobacco,nasty-juice,new-arrivals,nic-pods,nicotine-salts,nitecore,nkd-100-disposable-e-cigarettes,nktr-e-liquids-by-sqn-vapor,no-hype-vapors,nuts-vape-juice-flavors,nutty-vape-juice-flavors,oak-reserve-e-liquid,ōkvmi-/-okami-brand,omg-vape-juice,on-sale-e-liquids,one-hit-wonder,open-pod-system-kits,orange-vape-juice-flavors,orgnx-eliquids,oro-disposable-pods,ovns,oxva-vape,pachamama,pancake-vape-juice-flavors,papaya-vape-juice-flavors,passion-fruit-vape-juice-flavors,peach-vape-juice-flavors,peanut-butter-vape-juice-flavors,peanut-vape-juice-flavors,pear-vape-juice-flavors,pepe's-churros,peppermint-vape-juice-flavors,perkey,phix-by-major-league-vapers,pie-vape-juice-flavors,pineapple-vape-juice-flavors,pistachio-vape-juice-flavors,plum-vape-juice-flavors,plus-pods,pmta-compliant-vaping-products,pod-juice-e-liquids,pod-system-brands,pod-systems,pomegranate-vape-juice-flavors,pop-clouds,pop-vapors-e-liquid,popcorn,premium-e-liquids,pressed-e-juice,products,products-for-california-consumers,propaganda-e-liquid,prophet-premium-blends,puff,puff-labs,puffco,punch-vape-juice-flavors,raspberry-vape-juice-flavors,red-apple-vape-juice-flavors,reds-by-vape-7-daze,replacement-coils,replacement-glass-tubes,replacement-pods-and-cartridges,ripe-vapes-handcrafted-juice,rofvape,ruthless-vapor,rype-vapors,sale-&-clearance,salt-bae-50,salt-factory-ejuice,salt-pop,salty-fog-e-liquid-by-cosmic-fog,salty-man-vapor,saucy-group,savory-vape-juice-flavors,sea-pods,shijin-vapor,sigelei,skwezed,small-tobacco-eliquid,smok-tech,smoke-deez,smoking-vapor,smokjoy®,snowwolf,soda-vape-juice-flavors,sol-vapor,solace-vapor,sour-vape-juice-flavors,space-jam,speculoos-vape-juice-flavors,sqn-vapor-e-liquids,steam-engine,str8-nicotine-salt,strawberry-vape-juice-flavors,sua-vapors,sugar,suorin,super-salt-eliquid,superb-liquids,svrf-e-liquids,synthetic-nicotine-eliquids,syrup-vape-juice-flavors,tailored-vapors,tangerine-vape-juice-flavors,tangy-vape-juice-flavors,tart-vape-juice-flavors,taylor-flavors,tea-vape-juice-flavors,tfn,the-council-of-vapor,the-finest-e-liquid,the-jones,the-mamasan-e-liquid,the-milkman-e-liquid-by-the-vaping-rabbit,the-pancake-house,toasted-marshmallow-vape-juice-flavors,tobacco-vape-juice-flavors,top-class,tropic-king,tropical-vape-juice-flavors,trpcl-100-salts,twist-e-liquids,usa-vape-lab,uwell,vandy-vape,vanilla-custard-vape-juice-flavors,vanilla-vape-juice-flavors,vape-accessories,vape-battery-&-chargers,vape-box-mods,vape-breakfast-classics,vape-deals,sale-&-clearance,vape-devices,vape-starter-kits,vape-tanks,vapeants,vapedynamics,vapetasia-e-liquid,vaporesso,verdict-vapors,vgod®,viva-disposable-e-cigs,voopoo,wake-mod-co.,watermelon-vape-juice-flavors,wellon-tech,white-chocolate-vape-juice-flavors,wiff-bar,yami-vapor-e-liquid-flavors,yocan-brand,yogi-e-liquids,yogurt-vape-juice-flavors" | split: ',' %}
+          {% for collection in collectionsHandle%}
+      		{% for product in collections[collection].all_products%}
+            {%- assign focusKeyword = product.metafields.SEOMetaManager.config | split: '"focusKeyword":"' | last | split: '"' | first  -%}
+            {%- if product.metafields.instructions != blank -%}
+      <ul>
+        {%- for field in product.metafields -%}
+          <li>{{ field }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+          {% endfor %}
+      {% endfor %}
+      {% endpaginate %}
+  	</table>
+   
+    
+   {% endcomment %}
+   
+    <table>
+      {% for collection in collections.product %}
+      
+           <tr> 
+            <td>{{ collection }}<td>
+            <td>{{ focusKeyword }}</td>
+            <td>{{ collection.url  | prepend: 'https://vapejuicedepot.com' }}</td>
+     	  </tr>
+      
+      {% endfor %}
+   <table>
+     
+   
+
+     
+
+ {% comment %}   
+     
+{% assign currentCol = collection.handle %}
+    {% for collection in collections %}
+<!--       <li>{{ collections.all.all_products_count }}</li> -->
+     <li>{{ collection.url }}
+      
+      {% endfor %}
+       
+       
+   {% endcomment %}
+    
+<!-- <style>
+  span {
+    font-weight: bold; 
+    color: red;
+    margin-right: 15px;
+  }
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+    color: #000;
+  }
+  
+  table {
+  counter-reset: rowNumber;
+}
+
+table tr::before {
+  display: table-cell;
+  counter-increment: rowNumber;
+  content: counter(rowNumber) ".";
+  padding-right: 0.3em;
+  text-align: right;
+  border-top: 1px solid black;
+}
+  td:not(:nth-child(4)) {
+   width: 350px;
+  }
+</style> -->
+   
+   
+   
+   {% comment %}
+   
+  	{% for product_vendor in shop.vendors %}
+			{% assign its_a_match = false %}
+			{% capture my_collection_handle %} {{ product_vendor | handleize | strip | escape  }} {% endcapture %}
+			{% assign my_collection_handle_stripped = my_collection_handle | strip | escape %}
+
+			{% for collection in collections %}
+	{% if my_collection_handle_stripped == collection.handle %}
+  			{% if collection.image %}
+				{% assign collection_image = collection.image %}
+  				{% assign collection_description = collection.description %}
+   				{% assign collection_url = collection.url %}
+  				{% assign product_url = product.url %}
+  			{% endif %}
+			{% assign its_a_match = true %}
+	{% endif %}
+{% endfor %}
+   
+    {% for product in collections.products %}
+    	{{ product.title }}
+	{% endfor %} 
+
+			
+			{% if its_a_match %}
+   
+   
+    			<div class="subcategory-item medium-up--one-sixth col-sm-3 col-md-3 col-lg-2 col-xs-6 col-xl-one-fifth Grid__Cell 1/2--phone 1/4--tablet-and-up 2/12--desk">
+                  <img src="{{ collection_image.src | collection_img_url: 'medium' }}" alt="{{ collection_image.alt }}" />
+                  <h3 class="subcategory-item__title">{{ product_vendor }}</h3>
+                  <a href="/collections/{{ product_vendor | handleize }}">          
+                    	<p>{{ collection_description }}<p/> 					
+				  </a>
+    			</div>
+   
+   			
+				  
+			{% endif %}
+   					
+	{% endfor %}
+
+	     
+     {% endcomment %}
+       
+       
+       
+     
+<!--      <ul>
+  {%- for product_vendor in shop.vendors -%}
+    <li>{{ product_vendor | link_to_vendor }}</li>
+  {%- endfor -%}
+</ul> -->
+     
+
+
+     
+
+<style>
+  .vendor-list-item a {
+    	padding: 8px;
+    	border: solid 1px;
+    	min-width: 200px;
+    	display: block;
+  }
+  .vendor-list-item {
+  		margin: 10px;
+  }
+  .vendor-list-item {
+    	display: inline-block;
+  }
+  .vendor-list-item a:hover {
+    	background-color: #C2A284;
+    	color: white;
+  }
+  @media only screen and (max-width: 768px)  {
+  		.vjd-container {
+    		margin: 20px 20px;
+    		padding: 20px 20px;
+  		}
+  }
+  
+  
+</style>
+<style>
+.subcategory-item .figure {
+    display: block;
+    max-width: 100%;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.subcategory-item .figure img {
+    width: 100%;
+}
+
+.subcategory-item .figure::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 10px solid #eeeeee;
+    content: '';
+    opacity: 1;
+    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+    transition: opacity 0.35s, transform 0.35s;
+}
+
+.border-dark .subcategory-item .figure::before {
+    border: 10px solid #444444;
+}
+
+.subcategory-item a {
+    text-decoration: none;
+}
+
+.subcategory-item a:hover {
+    text-decoration: none;
+}
+
+.subcategory-item a:hover .figure::before {
+    opacity: 0;
+}
+
+.subcategory-item a:hover .subcategory-item__title {
+    color: #4d9297;
+}
+
+.subcategory-item__title {
+    font-size: 1.25em;
+    line-height: 1em;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: #4a4a4a;
+    text-transform: uppercase;
+    -webkit-transition: all 300ms linear 0s;
+    -moz-transition: all 300ms linear 0s;
+    -ms-transition: all 300ms linear 0s;
+    -o-transition: all 300ms linear 0s;
+    transition: all 300ms linear 0s;
+}
+
+.subcategory-item__title a {
+    color: #4a4a4a;
+}
+
+.subcategory-item__title a:hover {
+    color: #4d9297;
+    text-decoration: none;
+}
+
+
+.PageContent.PageContent--narrow.Rte {
+    max-width:none;
+}
+.subcategory-item {
+    display: inline-block;
+    float: none;
+    vertical-align: top;
+    margin-bottom: 40px;
+    margin-right: 30px;
+    text-align: center;
+  	border: 11px outset rgba(255,238,46,0.67);
+	border-radius: 40px 40px 40px 40px;
+}
+
+.PageContent .subcategory-item a {
+    text-decoration:none;
+}
+</style>
+<style>
+#flav-search{
+    height: 40px;
+    border: none;
+    background-color: #f5f5f5;
+    padding: 13px 15px 14px 20px;
+    line-height: 21px;
+    font-weight: 500;
+    font-size: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: unset;
+}
+</style>
+{% schema %}
+  {
+    "name": "Section name",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

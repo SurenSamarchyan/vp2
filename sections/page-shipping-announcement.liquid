@@ -1,0 +1,471 @@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<section data-section-id="{{ section.id }}" data-section-type="page">
+  <div class="container container--medium">
+        
+<!--  ZipChecker    -->
+    <div style="margin-top: 20px;" class="container--medium">
+      <header class="page__header page__header--centered page__header--stack">
+      	<h1 class="page__title heading h2">DO WE SHIP TO YOU?</h1>
+      </header>
+      <div class="page-inner-content">
+        <div class="doweship-form">
+          <div id="doweship-form">
+            <fieldset class="fieldset">
+              <p style="text-align: center; margin-top: 35px;"><span style="font-size: 1.1em;font-weight: bold;">Check Your Zip Code</span></p>
+              <div class="field zipcode required">
+                <div class="control">
+                  <input name="zipcode" id="zipcode" title="Enter Your Zip Code Here" value="" class="input-text" type="text" placeholder="Enter Your Zip Code Here" autocomplete="off" aria-required="true" />
+                  {%- render 'icon', icon: 'search' -%}
+                </div>
+                <div hidden id="spinner"></div>
+              </div>
+              <div class="actions-toolbar">
+                <div class="primary">
+                  <button id="submit_zip_code" type="button" class="zip__code__btn button button--secondary">SEARCH</button>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+        <div class="doweship-form-right">
+          <div>
+            <div style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 0 10px 10px 10px;">
+              <div class="do_we_ship_content" style="border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 0px;padding-left: 20px;">
+                <p>Please enter your Zip Code see if we currently deliver in your area!</p>
+                <p>If you're from a state that we don't ship to, that means there are shipping restrictions. In either case, we invite you to check with us in a few weeks as our shipping coverage will increase weekly.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div>
+    
+<!--     <div class="container--narrow" style="margin:20px auto;">
+      <p><strong>To Our Valued Community</strong></p>
+      <p>We are happy to announce that we can ship packages to the following states* :</p>
+      <p><strong>Arizona, California, Colorado, Idaho, New Mexico, Nevada, Oregon, Utah, Washington, Arkansas, Illinois, Kansas, Louisiana, Mississippi, Oklahoma, Texas, Georgia, Indiana, Kentucky, Michigan, Minnesota, Missouri, New York, Ohio, Tennessee, Wisconsin</strong></p>
+      <p>States where shipping is available are marked in <strong style="color:#499494">green</strong>.</p>
+      <p style="margin-bottom: 0">We're currently working hard to expand our shipping network to all states marked in grey.</p>    
+      <p style="margin-top:10px;">Sincerely,</p>
+      <p>Vape Juice Depot</p>
+      <p><strong>*P.s. Some zip codes have flavor and product restrictions</strong></p>
+      <p><strong>**Note: All packages require an Adult Signature upon Delivery (21+). If you are unable to sign for the package at home, we recommend shipping the package to your place of work to ensure that you receive it without any issues.</strong></p>
+    </div>
+  </div> -->
+  
+<!--  we ship popup  -->
+    <div class="zipCkecker-modal-wrap" id="zipCkecker-modal-demo" style="display: none;">
+      <div class="zipCkecker-modal-container">
+
+        <div class="zipCkecker-modal-header">
+          <div style="display: flex; justify-content: center; align-items: center;"><img class="lazyload image--fade-in" style="width: 70%;padding:20px 0;" src="https://cdn.shopify.com/s/files/1/1118/8312/files/Artboard_1-0_2.png?v=1637571038" alt="We Ship"></div>
+          <button class="closeZipPopup">
+            {%- render 'icon', icon: 'close' -%}
+          </button>
+        </div>
+        <div class="zipCkecker-modal_text_1 zipCkecker-modal-title">Shipping Status for <span style="font-weight:bold;" class="forZip1"></span></div>
+
+        <div class="shipping-modal_text_2 zipCkecker-modal-title">
+            <p class="zipCkecker-notice-popup">Great news! <br>We do ship to your Zip Code!</p>
+        </div>
+
+        <div class="zipChecker-popup-footer" style="display:flex; justify-content: center; background-color: #e9e9e9; padding: 20px;">
+          <div class="zipCkecker-modal-btn-content">
+            <a href="/collections/new-arrivals" class="shipping-modal_btn">
+                <span class="shipping-btn_text">SHOP NEW ARRIVALS</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  
+<!-- we don't ship popup -->
+    <div class="zipCkecker-dont-modal-wrap" id="zipCkecker-dontShip-modal-demo" style="display: none;">
+      <div class="zipCkecker-modal-container">
+
+        <div class="zipCkecker-modal-header">
+          <div style="display: flex; justify-content: center; align-items: center;"><img class="lazyload image--fade-in" style="width: 70%;padding:20px 0;" src="https://cdn.shopify.com/s/files/1/1118/8312/files/Artboard_1-0_3.png?v=1637579735" alt="We Ship"></div>
+          <button class="closeDontShipZipPopup">
+            {%- render 'icon', icon: 'close' -%}
+          </button>
+        </div>
+        <div class="zipCkecker-modal_text_1 zipCkecker-modal-title">Shipping Status for <span style="font-weight:bold;" class="forZip2"></span></div>
+
+        <div class="shipping-modal_text_2 zipCkecker-modal-title">
+          <p class="zipCkecker-notice-popup">We're sorry. We currently don't serve your Zip Code.</p>
+          <p style="padding:0 20px;">Please check back with us in several weeks, as our team will continue to find solutions.</p><p style="padding:0 20px;margin-bottom: 15px;"><img alt="Info icon" style="margin-right: 5px;" src="https://cdn.shopify.com/s/files/1/1118/8312/files/icons8-info-24.png?v=1637581673" />Tip: You can also try entering your business Zip Code.</p>
+        </div>
+
+      </div>
+    </div>
+  
+<!-- we can ship in mid-December -->
+    <div class="zipCkecker-mid-modal-wrap" id="zipCkecker-mid-modal-demo" style="display: none;">
+      <div class="zipCkecker-modal-container">
+
+        <div class="zipCkecker-modal-header">
+          <div style="display: flex; justify-content: center; align-items: center;"><img class="lazyload image--fade-in" style="width: 70%;padding:20px 0;" src="https://cdn.shopify.com/s/files/1/1118/8312/files/Artboard_1-0_3.png?v=1637579735" alt="We Ship"></div>
+          <button class="closeMidZipPopup">
+            {%- render 'icon', icon: 'close' -%}
+          </button>
+        </div>
+        <div class="zipCkecker-modal_text_1 zipCkecker-modal-title">Shipping Status for <span style="font-weight:bold;" class="forZip3"></span></div>
+
+        <div class="shipping-modal_text_2 zipCkecker-modal-title">
+          <p class="zipCkecker-notice-popup">Shipping to your zip code will be available in mid-December. If you are ready to wait, please continue to the payment page.</p>
+        </div>
+
+        <div class="zipChecker-popup-footer" style="display:flex; justify-content: center; background-color: #e9e9e9; padding: 20px;">
+          <div class="zipCkecker-modal-btn-content">
+            <a href="/collections/new-arrivals" class="shipping-modal_btn">
+                <span class="shipping-btn_text">SHOP NEW ARRIVALS</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+//   zipChecker
+let units = "&units=imperial";
+let data;
+
+
+    const spinner = document.getElementById("spinner");
+	const validZip = /^(\d{5})/;
+  
+    const inputedZip = document.getElementById('zipcode').value;
+  
+	document.getElementById('submit_zip_code').addEventListener('click', function() {
+      if(validZip.test(document.getElementById('zipcode').value)) {
+	     async function checkEstimatorZip(zip){
+              spinner.removeAttribute('hidden');
+
+              const estimatorZipCheckerResponse = await fetch(`https://vjdzip.azurewebsites.net/api/zipchecker?code=90001`)
+              const result = await estimatorZipCheckerResponse.json()
+              
+              const stateByZip = await fetch(`http://api.zippopotam.us/us/${zip}`)
+              const result1 = await stateByZip.json()
+              
+                  if (result1?.places[0]?.state == "Utah") {
+                    spinner.setAttribute('hidden', '');
+                    document.getElementById('zipCkecker-dontShip-modal-demo').style.display = 'block';
+                    $(".zipCkecker-modal-container").show().animate({top: 20 + "%"}, 800);
+                    document.querySelector('.forZip2').innerHTML = `"${document.getElementById('zipcode').value.substring(0, 5)}"`;
+         		  } else {
+                    spinner.setAttribute('hidden', '');
+                  	document.getElementById('zipCkecker-modal-demo').style.display = 'block';
+                    $(".zipCkecker-modal-container").show().animate({top: 20 + "%"}, 800);
+                  	document.querySelector('.forZip1').innerHTML = `"${document.getElementById('zipcode').value.substring(0, 5)}"`;
+                  }
+          }
+          checkEstimatorZip(document.getElementById('zipcode').value.substring(0, 5))  
+      }
+	})
+
+$("#submit_zip_code").on('keyup', function(event) {
+	if (event.keyCode == 13) {
+		submitQuery();
+	}
+});
+                  
+$(".closeZipPopup").click(function(){
+  $("#zipCkecker-modal-demo").css("display", "none");
+});
+
+$(".closeDontShipZipPopup").click(function(){
+  $("#zipCkecker-dontShip-modal-demo").css("display", "none");
+});
+   
+$(".closeMidZipPopup").click(function(){
+  $("#zipCkecker-mid-modal-demo").css("display", "none");
+});
+
+</script>
+
+<style>
+/* map */
+#us-map{
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+path:hover, circle:hover {
+  stroke: #002868 !important;
+  stroke-width:2px;
+  stroke-linejoin: round;
+  fill: #002868 !important;
+  cursor: pointer;
+}
+#path67 {
+  fill: none !important;
+  stroke: #A9A9A9 !important;
+  cursor: default;
+}
+#info-box {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  background-color: #ffffff;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 5px;
+}
+#shipping_form {
+  display: flex;
+  flex-wrap: wrap;
+}
+#shipping_form > input {
+  flex: 1 1 10ch;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+}
+#shipping_form > input[type="email"] {
+  flex: 3 1 30ch;
+}
+#shipping_form input {
+  border: none;
+  background: #fff;
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+}
+#shipping_form input[type="submit"] {
+  background: #499494;
+  color: white;
+}
+#mapColorSwatch {
+  position:absolute;
+  right:0;
+  bottom:0;
+}
+@media screen and (max-width : 1200px) {
+  #mapColorSwatch {
+  	position: relative;
+  }
+}
+
+/*  zipChecker  */
+.page-inner-content {
+  display: flex;
+}
+.doweship-form {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+.fieldset {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: #F2F2F2;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 2px #fff inset, -1px -1px 2px #fff inset;
+  border-radius: 3px/6px;
+}
+#zipcode {
+  color: #616161;
+  font-size: 0.8rem;
+  padding: 0.6rem 2.1rem;
+  padding-right: 5rem;
+  border-radius: 0.2rem;
+  background-color: rgb(255, 255, 255);
+  border: none;
+  display: block;
+  border-bottom: 0.3rem solid transparent;
+  transition: all 0.3s; 
+}
+#zipcode::placeholder {
+ font-size: smaller; 
+}
+.zipcode {
+ position: relative; 
+}
+.control {
+  position: relative; 
+}
+.control svg {
+  position: absolute;
+  top: 50%;
+  transform: translate(50%, -50%);
+}
+.zip__code__btn {
+  margin: 35px 0; 
+}
+
+.grey-bg {
+  background-color: #e9e9e9;
+  font-size: 0.7em !important;
+  margin-top: 10px;
+  padding: 10px;
+}
+@media screen and (max-width: 640px) {
+ .page-inner-content {
+    flex-direction: column; 
+  }
+  .doweship-form {
+    width: 95%;
+  }
+}
+  
+/*  we ship popup  */
+.zipCkecker-modal-wrap, .zipCkecker-dont-modal-wrap, .zipCkecker-mid-modal-wrap {
+  background: rgba(0, 0, 0, 0.7);
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  top: 0;
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.zipCkecker-modal-wrap .zipCkecker-modal-container, 
+.zipCkecker-dont-modal-wrap .zipCkecker-modal-container,
+.zipCkecker-mid-modal-wrap .zipCkecker-modal-container {
+ background: #fff;
+ max-width: 90%;
+ width: 500px;
+ z-index: 100;
+ position: absolute;
+ top: -50%;
+ left: 50%;
+ -ms-transform: translate(-50%);
+ transform: translate(-50%);
+}
+.zipCkecker-modal-wrap .zipCkecker-modal-container .zipCkecker-modal-header, 
+.zipCkecker-dont-modal-wrap .zipCkecker-modal-container .zipCkecker-modal-header,
+.zipCkecker-mid-modal-wrap .zipCkecker-modal-container .zipCkecker-modal-header {
+ background-color: #458077;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ width: 100%;
+ position: relative;
+}
+.zipCkecker-dont-modal-wrap .zipCkecker-modal-container .zipCkecker-modal-header {
+  background-color: #b30000;
+}
+.zipCkecker-mid-modal-wrap .zipCkecker-modal-container .zipCkecker-modal-header {
+ background-color: #ffbf69;  
+}
+.zipCkecker-modal_text_1 {
+ font-size: 0.8em;
+ text-align: center;
+  margin-top: 15px;
+}
+.zipCkecker-notice-popup {
+ font-size: 1.1em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.zipCkecker-modal-btn-content {
+ display: -webkit-flex;
+ display: -ms-flexbox;
+ display: flex;
+}
+.zipCkecker-modal_btn {
+  display: flex;
+  padding: 10px;
+  border: 1px solid #458077; 
+  background-color: #fff;
+  color: #000;
+  font-size: 12px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.zipCkecker-modal_btn:first-child {
+  background-color: #458077;
+  color: #fff;
+  margin-right: 15px;
+}
+.zipCkecker-modal-wrap .zipCkecker-modal-header .shipping-modal-title {
+  padding: 15px 20px;
+  text-align: center;
+  font-size: 16px;
+}
+.zipCkecker-modal-wrap .shipping-modal-content {
+  float: left;
+  margin: 0;
+  padding: 15px 30px;
+  width: 100%;
+}
+.shipping-modal_text_2 { 
+  margin-bottom: 0; 
+  padding-top: 0 !important;
+}
+.closeZipPopup, .closeDontShipZipPopup, .closeMidZipPopup {
+  position: absolute;
+  right: 10px;
+  top: 0;
+  color: #fff;
+}
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  .zipCkecker-modal_text_1 {
+   	font-size: 0.8em;
+  }
+  .zipCkecker-notice-popup {
+    font-size: 0.9em;
+  }
+  .zipCkecker-modal_btn {
+    padding: 5px 5px;
+  }
+}
+
+/* spinner */
+#spinner:not([hidden]) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#spinner::after {
+  content: "";
+  width: 40px;
+  height: 40px;
+  border: 2px solid #f3f3f3;
+  border-top: 3px solid #f25a41;
+  border-radius: 100%;
+  will-change: transform;
+  animation: spin 1s infinite linear
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "Page"
+}
+{% endschema %}

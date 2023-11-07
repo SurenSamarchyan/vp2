@@ -1,0 +1,65 @@
+# we use Shopify as our ecommerce platform
+{%- comment -%}
+# Caution! Please read https://help.shopify.com/en/manual/promoting-marketing/seo/editing-robots-txt before proceeding to make changes to this file.
+{% endcomment %}
+{% for group in robots.default_groups %}
+  {{- group.user_agent -}}
+
+  {% for rule in group.rules %}
+    {{- rule -}}
+  {% endfor %}
+
+  {%- if group.user_agent.value == '*' -%}
+{{ 'Disallow: /products/excise_tax' }}
+{{ 'Disallow: /*?variant=*' }}
+{{ 'Disallow: /*=uniform*' }}
+{{ 'Disallow: /*_ss=*' }}
+{{ 'Disallow: /*?_sid*' }}
+{{ 'Disallow: /*?yoReviewsPage=*' }}
+{{ 'Disallow: /*?sscid=*' }}
+{{ 'Disallow: /*view=all*' }}
+{{ 'Disallow: /collections/*?_=pf&pf_pt_*' }}
+{{ 'Disallow: /*?fbclid=*' }}
+{{ 'Disallow: /*?utm_source=*' }}
+{{ 'Disallow: /*?stamped_r_id=*' }}
+{{ 'Disallow: /*?pr_prod_strat=*' }}
+{{ 'Disallow: /*?ref=*' }}
+{{ 'Disallow: /*?omnisendContactID=*' }}
+{{ 'Disallow: /*?pr_prod_strat=*' }}
+  {%- endif -%}
+
+  {%- if group.user_agent.value == 'adsbot-google' -%}
+{{ 'Disallow: /products/excise_tax' }}
+{{ 'Disallow: /*?variant=*' }}
+{{ 'Disallow: /collections/*sort_by*' }}
+{{ 'Disallow: /*/collections/*sort_by*' }}
+{{ 'Disallow: /*=uniform*' }}
+{{ 'Disallow: /*_ss=*' }}
+{{ 'Disallow: /*?_sid*' }}
+{{ 'Disallow: /*?yoReviewsPage=*' }}
+{{ 'Disallow: /*?sscid=*' }}
+{{ 'Disallow: /*view=all*' }}
+{{ 'Disallow: /*?_=pf&pf*' }}
+{{ 'Disallow: /*?fbclid=*' }}
+{{ 'Disallow: /*?utm_source=*' }}
+{{ 'Disallow: /*?stamped_r_id=*' }}
+{{ 'Disallow: /*?pr_prod_strat=*' }}
+{{ 'Disallow: /*?ref=*' }}
+{{ 'Disallow: /*?omnisendContactID=*' }}
+{{ 'Disallow: /*?pr_prod_strat=*' }}
+Sitemap: https://vapejuicedepot.com/sitemap.xml
+{{ }}
+  {%- endif -%}
+
+  {%- if group.user_agent.value == 'AhrefsSiteAudit' -%}
+{{ 'Disallow: /products/excise_tax' }}
+  {%- endif -%}
+
+  {%- if group.user_agent.value == 'AhrefsBot' -%}
+{{ 'Disallow: /products/excise_tax' }}
+  {%- endif -%}
+
+  {%- if group.sitemap != blank -%}
+    {{ group.sitemap }}
+  {%- endif -%}
+{% endfor %}
